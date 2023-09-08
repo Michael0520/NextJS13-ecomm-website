@@ -34,7 +34,7 @@ enum PriceStyles {
 const renderBadge = (type: CardType) => {
   if (type === CardType.Hot) {
     return (
-      <span className="rounded-full bg-red-500 px-2 py-1 text-white">
+      <span className="z-30 rounded-full bg-red-500 px-2 py-1 text-white">
         熱售中
       </span>
     )
@@ -55,21 +55,26 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Card>
       <div className="relative">
-        <div className="absolute right-0 top-0 m-2">{renderBadge(type)}</div>
+        <div className="absolute right-0 top-0 z-30 m-2">
+          {renderBadge(type)}
+        </div>
 
         {type === CardType.SoldOut && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
             <span className="text-4xl font-bold text-white">售完</span>
           </div>
         )}
 
         <CardHeader>
-          <Image
-            src={imageURL}
-            alt={title || "Image"}
-            width={300}
-            height={300}
-          />
+          <div className="relative z-10 h-48 w-full">
+            <Image
+              src={imageURL}
+              alt={title || "Image"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </div>
           <CardTitle className="py-2">{title || "卡片標題"}</CardTitle>
           <CardDescription>{description || "卡片描述"}</CardDescription>
         </CardHeader>
