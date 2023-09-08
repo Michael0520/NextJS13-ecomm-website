@@ -1,5 +1,6 @@
 {
-  "name": "next-template",
+  "name": "nextjs13-ecomm-website",
+  "description": "A modern e-commerce website example built with Next.js 13.",
   "version": "0.0.2",
   "private": true,
   "scripts": {
