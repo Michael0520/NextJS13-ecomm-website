@@ -91,12 +91,12 @@ const IndexPage = () => {
         </Button>
       </section>
       {/* Outlet about Left Sidebar , Right Product List */}
-      <div className="flex flex-col space-y-8 px-14 py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
+      <section className="flex flex-col space-y-8 px-14 py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
         <aside className="-mx-4 overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
           <SidebarNav items={sidebarNavItems} />
         </aside>
         <div className="flex-1 lg:max-w-2xl">Main</div>
-      </div>
+      </section>
     </>
   )
 }
