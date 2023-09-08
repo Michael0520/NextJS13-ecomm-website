@@ -17,3 +17,4 @@ npm run dev
 - Icons from [Lucide](https://lucide.dev)
 - Dark mode with `next-themes`
 - Tailwind CSS class sorting, merging and linting.
+# NextJS13-ecomm-website
