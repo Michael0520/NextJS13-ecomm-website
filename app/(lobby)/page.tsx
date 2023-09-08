@@ -36,8 +36,23 @@ const IndexPage = () => {
         </header>
       </section>
 
-      {/* Page Description - Group - three column*/}
-      {/* HashTag - Block - font-bold */}
+      {/* Page Description - Group - three column */}
+      <div className="flex flex-col px-12">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          4.9 (42 評分) • 早餐和早午餐 • $ 詳細資訊
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          30–45 分鐘 • 57TWD 費用
+        </div>
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          在上方輸入地址，即可查看外送及自取預估時間。
+        </div>
+      </div>
+      {/* Highlight text - Block - font-bold */}
+      <div className="px-12 py-2 text-sm font-bold text-gray-600 dark:text-gray-400">
+        $ • 早餐和早午餐
+      </div>
+
       {/* Button Group - inline - About 查看類似商品、團購訂單 */}
       {/* Outlet about Left Sidebar , Right Product List */}
     </>
