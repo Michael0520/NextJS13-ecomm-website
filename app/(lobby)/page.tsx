@@ -4,7 +4,17 @@ import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 
 import Breadcrumb from "./components/Breadcrumb"
+import ProductCard, { CardType } from "./components/product-card"
 import { SidebarNav } from "./components/sidebar-nav"
+
+interface ProductInfo {
+  type: CardType
+  hasImage?: boolean
+  title?: string
+  description?: string
+  content?: string
+  footer?: string
+}
 
 const IndexPage = () => {
   const breadCrumbList = [
@@ -38,6 +48,26 @@ const IndexPage = () => {
       href: "/fish",
     },
   ]
+
+  const products: ProductInfo[] = Array.from({ length: 20 }, (_, i) => {
+    let type: CardType
+
+    if (i % 3 === 0) {
+      type = CardType.Basic
+    } else if (i % 3 === 1) {
+      type = CardType.Hot
+    } else {
+      type = CardType.SoldOut
+    }
+
+    return {
+      type,
+      title: `${CardType[type]} 商品 ${i + 1}`,
+      description: `這是 ${CardType[type]} 商品的描述`,
+      content: `99`,
+      footer: `這是 ${CardType[type]} 商品的底部資訊`,
+    }
+  })
 
   return (
     <>
@@ -95,7 +125,12 @@ const IndexPage = () => {
         <aside className="-mx-4 overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <div className="flex-1 lg:max-w-2xl">Main</div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {products.map((product, index) => (
+            <ProductCard key={index} {...product} />
+          ))}
+        </div>
       </section>
     </>
   )
