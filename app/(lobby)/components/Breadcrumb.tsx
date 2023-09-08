@@ -46,7 +46,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ items }) => {
   }, [items])
 
   return (
-    <nav className="container flex h-8" aria-label="Breadcrumb">
+    <nav className="container flex py-4" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-3">
         {renderedItems}
       </ol>
