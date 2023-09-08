@@ -1,4 +1,7 @@
 import Image from "next/image"
+import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
+
+import { Button } from "@/components/ui/button"
 
 import Breadcrumb from "./components/Breadcrumb"
 
@@ -54,6 +57,14 @@ const IndexPage = () => {
       </div>
 
       {/* Button Group - inline - About 查看類似商品、團購訂單 */}
+      <section className="flex gap-3 px-12 py-4">
+        <Button className="rounded-full">
+          <GridIcon className="mr-2 h-4 w-4" /> 查看類似商品
+        </Button>
+        <Button className="rounded-full">
+          <PlusIcon className="mr-2 h-4 w-4" /> 團購訂單
+        </Button>
+      </section>
       {/* Outlet about Left Sidebar , Right Product List */}
     </>
   )
