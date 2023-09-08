@@ -83,7 +83,7 @@ const IndexPage = () => {
         />
       </section>
       {/* Page Title - Block */}
-      <section className="px-12 py-6">
+      <section className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6">
         <header className="text-left">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
             非常厲害美食館 信義活力吳興店
@@ -95,7 +95,7 @@ const IndexPage = () => {
       </section>
 
       {/* Page Description - Group - three column */}
-      <div className="flex flex-col px-12">
+      <section className="flex flex-col px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6">
         <div className="text-sm text-gray-600 dark:text-gray-400">
           4.9 (42 評分) • 早餐和早午餐 • $ 詳細資訊
         </div>
@@ -105,14 +105,14 @@ const IndexPage = () => {
         <div className="text-sm text-gray-600 dark:text-gray-400">
           在上方輸入地址，即可查看外送及自取預估時間。
         </div>
-      </div>
+      </section>
       {/* Highlight text - Block - font-bold */}
-      <div className="px-12 py-2 text-sm font-bold text-gray-600 dark:text-gray-400">
+      <div className="px-6 text-sm font-bold text-gray-600 dark:text-gray-400 sm:px-8 md:px-12">
         $ • 早餐和早午餐
       </div>
 
       {/* Button Group - inline - About 查看類似商品、團購訂單 */}
-      <section className="flex gap-3 px-12 py-4">
+      <section className="flex gap-3 px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6">
         <Button className="rounded-full">
           <GridIcon className="mr-2 h-4 w-4" /> 查看類似商品
         </Button>
@@ -121,7 +121,7 @@ const IndexPage = () => {
         </Button>
       </section>
       {/* Outlet about Left Sidebar , Right Product List */}
-      <section className="flex flex-col space-y-8 px-14 py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
+      <section className="flex flex-col space-y-8 px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
         <aside className="-mx-4 overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
           <SidebarNav items={sidebarNavItems} />
         </aside>
