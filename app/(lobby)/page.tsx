@@ -4,6 +4,7 @@ import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 
 import Breadcrumb from "./components/Breadcrumb"
+import { SidebarNav } from "./components/sidebar-nav"
 
 const IndexPage = () => {
   const breadCrumbList = [
@@ -14,6 +15,30 @@ const IndexPage = () => {
 
   const imageURL =
     "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+
+  const sidebarNavItems = [
+    {
+      title: "最熱門",
+      href: "/",
+    },
+    {
+      title: "鬆餅",
+      href: "/cake",
+    },
+    {
+      title: "蛋類",
+      href: "/egg",
+    },
+    {
+      title: "飲品",
+      href: "/drink",
+    },
+    {
+      title: "魚類",
+      href: "/fish",
+    },
+  ]
+
   return (
     <>
       {/* Breadcrumb - Block */}
@@ -66,6 +91,12 @@ const IndexPage = () => {
         </Button>
       </section>
       {/* Outlet about Left Sidebar , Right Product List */}
+      <div className="flex flex-col space-y-8 px-14 py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <aside className="-mx-4 overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
+          <SidebarNav items={sidebarNavItems} />
+        </aside>
+        <div className="flex-1 lg:max-w-2xl">Main</div>
+      </div>
     </>
   )
 }
