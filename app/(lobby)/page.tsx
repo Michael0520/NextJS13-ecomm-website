@@ -122,7 +122,7 @@ const IndexPage = () => {
       </section>
       {/* Outlet about Left Sidebar , Right Product List */}
       <section className="flex flex-col space-y-8 px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="-mx-4 overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
+        <aside className="overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
           <SidebarNav items={sidebarNavItems} />
         </aside>
 
