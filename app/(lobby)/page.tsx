@@ -4,7 +4,7 @@ const IndexPage = () => {
   const breadCrumbList = [
     { name: "台灣", link: "#" },
     { name: "台北市", link: "#" },
-    { name: "內湖區", link: "", current: true },
+    { name: "內湖區", link: "" },
   ]
   return (
     <div>
