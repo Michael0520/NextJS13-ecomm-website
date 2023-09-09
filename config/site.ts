@@ -6,8 +6,8 @@ export const siteConfig = {
     "A modern e-commerce website example built with Next.js 13.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Products",
+      href: "/products",
     },
   ],
   links: {
