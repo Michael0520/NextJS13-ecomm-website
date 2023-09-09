@@ -2,6 +2,7 @@ import Image from "next/image"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
+import { Shell } from "@/components/shells/shell"
 
 import Breadcrumb from "./components/Breadcrumb"
 import ProductCard, { CardType } from "./components/product-card"
@@ -70,7 +71,7 @@ const IndexPage = () => {
   })
 
   return (
-    <>
+    <Shell>
       {/* Breadcrumb - Block */}
       <Breadcrumb items={breadCrumbList} />
       {/* Banner - Block */}
@@ -132,7 +133,7 @@ const IndexPage = () => {
           ))}
         </div>
       </section>
-    </>
+    </Shell>
   )
 }
 
