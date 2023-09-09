@@ -1,4 +1,5 @@
 import {
+  Image,
   LucideProps,
   Moon,
   Search,
@@ -12,6 +13,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   search: Search,
+  placeholder: Image,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
