@@ -20,8 +20,9 @@ import { Icons } from "@/components/icons"
 // import { getCartAction } from "@/app/_actions/cart"
 
 export async function CartSheet() {
-  const itemCount = 99
+  const itemCount = 0
   const avatarURL = "https://picsum.photos/id/237/800/800"
+  const hasItem = itemCount > 0
 
   return (
     <Sheet>
@@ -74,12 +75,12 @@ export async function CartSheet() {
       {/* Sheet Content */}
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
         <SheetHeader className="px-1">
-          <SheetTitle>Cart {itemCount > 0 && `(${itemCount})`}</SheetTitle>
+          <SheetTitle>Cart {hasItem && `(${itemCount})`}</SheetTitle>
         </SheetHeader>
         <div className="pr-6">
           <Separator />
         </div>
-        {itemCount > 0 ? (
+        {hasItem ? (
           <>
             <div className="flex flex-1 flex-col gap-5 overflow-hidden">
               {/* <CartLineItems items={cartLineItems} /> */}
