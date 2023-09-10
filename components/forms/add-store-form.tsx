@@ -1,12 +1,13 @@
 "use client"
 
-import * as React from "react"
+import { useId, useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
 import { updateCartItemSchema } from "@/lib/validations/cart"
+import { useQuantity } from "@/hooks/useQuantity"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -28,8 +29,16 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
-  const id = React.useId()
-  const [isPending, startTransition] = React.useTransition()
+  const { quantity, setQuantity, increment, decrement } = useQuantity(1)
+
+  const handleQuantityChange = (value: string) => {
+    const parsedValue = parseInt(value, 10)
+    if (!isNaN(parsedValue)) {
+      setQuantity(parsedValue)
+    }
+  }
+  const id = useId()
+  const [isPending, startTransition] = useTransition()
 
   // react-hook-form
   const form = useForm<Inputs>({
@@ -39,7 +48,7 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
     },
   })
 
-  function onSubmit(data: Inputs) {
+  const onSubmit = (data: Inputs) => {
     // TODO:Redux Update Cart
     // startTransition(async () => {
     //   try {
@@ -68,12 +77,7 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
             variant="outline"
             size="icon"
             className="h-8 w-8 rounded-r-none"
-            onClick={() =>
-              form.setValue(
-                "quantity",
-                Math.max(0, form.getValues("quantity") - 1)
-              )
-            }
+            onClick={decrement}
             disabled={isPending}
           >
             <Icons.remove className="h-3 w-3" aria-hidden="true" />
@@ -92,12 +96,7 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
                     min={0}
                     className="h-8 w-14 rounded-none border-x-0"
                     {...field}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      const parsedValue = parseInt(value, 10)
-                      if (isNaN(parsedValue)) return
-                      field.onChange(parsedValue)
-                    }}
+                    onChange={(e) => handleQuantityChange(e.target.value)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -110,9 +109,7 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
             variant="outline"
             size="icon"
             className="h-8 w-8 rounded-l-none"
-            onClick={() =>
-              form.setValue("quantity", form.getValues("quantity") + 1)
-            }
+            onClick={increment}
             disabled={isPending}
           >
             <Icons.add className="h-3 w-3" aria-hidden="true" />
