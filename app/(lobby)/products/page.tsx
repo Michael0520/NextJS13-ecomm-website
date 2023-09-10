@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -9,6 +10,7 @@ import ProductCard, { CardType } from "./components/product-card"
 import { SidebarNav } from "./components/sidebar-nav"
 
 interface ProductInfo {
+  id: string
   type: CardType
   hasImage?: boolean
   title?: string
@@ -62,6 +64,7 @@ const IndexPage = () => {
     }
 
     return {
+      id: `${i}`,
       type,
       title: `${CardType[type]} 商品 ${i + 1}`,
       description: `這是 ${CardType[type]} 商品的描述`,
@@ -129,7 +132,9 @@ const IndexPage = () => {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product, index) => (
-            <ProductCard key={index} {...product} />
+            <Link href={`/product/${product.id}`} key={product.id}>
+              <ProductCard {...product} />
+            </Link>
           ))}
         </div>
       </section>

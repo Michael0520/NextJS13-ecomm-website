@@ -1,9 +1,15 @@
 import {
+  ChevronLeft,
+  ChevronRight,
   Image,
+  Loader2,
   LucideProps,
+  Minus,
   Moon,
+  Plus,
   Search,
   SunMedium,
+  ThumbsUp,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -14,6 +20,12 @@ export const Icons = {
   moon: Moon,
   search: Search,
   placeholder: Image,
+  chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
+  remove: Minus,
+  add: Plus,
+  spinner: Loader2,
+  recommend: ThumbsUp,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
