@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Separator } from "@/components/ui/separator"
+import RatingBadge from "@/components/RatingBadge"
 import { AddToCartForm } from "@/components/forms/add-store-form"
 import { ProductImageCarousel } from "@/components/product-image-carousel"
 import { Shell } from "@/components/shells/shell"
@@ -47,10 +48,9 @@ const ProductPage = () => {
 
           {/* 產品價格 */}
           <div className="price mb-4 text-xl font-semibold">$100.00</div>
-          {/* 標籤 */}
-          <div className="shop mb-4 cursor-pointer text-base text-blue-600">
-            Hast Tags
-          </div>
+
+          {/* RatingBadge */}
+          <RatingBadge className="mb-4" />
 
           {/* 數量選擇與添加到購物車的按鈕 */}
           <AddToCartForm productId={1} />
