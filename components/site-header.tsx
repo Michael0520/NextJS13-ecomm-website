@@ -6,7 +6,7 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import CartButton from "./card-button"
+import { CartSheet } from "./card-sheet"
 import { Combobox } from "./combobox"
 
 export function SiteHeader() {
@@ -38,7 +38,7 @@ export function SiteHeader() {
             {/* Theme Mode */}
             <ThemeToggle />
             {/* Shop Cart */}
-            <CartButton itemCount={1} avatarSrc={avatarURL} />
+            <CartSheet />
           </nav>
         </div>
       </div>
