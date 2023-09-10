@@ -19,7 +19,7 @@ import { Icons } from "@/components/icons"
 
 // import { getCartAction } from "@/app/_actions/cart"
 
-export async function CartSheet() {
+export function CartSheet() {
   const itemCount = 0
   const avatarURL = "https://picsum.photos/id/237/800/800"
   const hasItem = itemCount > 0
