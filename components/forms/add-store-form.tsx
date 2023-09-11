@@ -7,7 +7,6 @@ import { toast } from "sonner"
 import type { z } from "zod"
 
 import { updateCartItemSchema } from "@/lib/validations/cart"
-import { useQuantity } from "@/hooks/useQuantity"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -29,14 +28,6 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
-  const { quantity, setQuantity, increment, decrement } = useQuantity(1)
-
-  const handleQuantityChange = (value: string) => {
-    const parsedValue = parseInt(value, 10)
-    if (!isNaN(parsedValue)) {
-      setQuantity(parsedValue)
-    }
-  }
   const id = useId()
   const [isPending, startTransition] = useTransition()
 
@@ -48,18 +39,26 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
     },
   })
 
+  const increment = () => {
+    form.setValue("quantity", form.getValues("quantity") + 1)
+  }
+
+  const decrement = () => {
+    form.setValue("quantity", Math.max(0, form.getValues("quantity") - 1))
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    const parsedValue = parseInt(value, 10)
+    if (isNaN(parsedValue)) return
+    form.setValue("quantity", parsedValue)
+  }
+
   const onSubmit = (data: Inputs) => {
     // TODO:Redux Update Cart
-    // startTransition(async () => {
-    //   try {
-    //     // await addToCartAction({
-    //     //   productId,
-    //     //   quantity: data.quantity,
-    //     // })
-    //   } catch (err) {
-    //     // catchError(err)
-    //     console.log(err)
-    //   }
+    // await addToCartAction({
+    //   productId,
+    //   quantity: data.quantity,
     // })
     toast.success("Added to cart.")
   }
@@ -96,7 +95,7 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
                     min={0}
                     className="h-8 w-14 rounded-none border-x-0"
                     {...field}
-                    onChange={(e) => handleQuantityChange(e.target.value)}
+                    onChange={handleInputChange}
                   />
                 </FormControl>
                 <FormMessage />
