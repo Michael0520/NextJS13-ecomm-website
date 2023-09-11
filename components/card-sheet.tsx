@@ -1,6 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import {
+  counterSlice,
+  selectCount,
+  useDispatch,
+  useSelector,
+} from "@/lib/redux"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -17,9 +23,14 @@ import {
 // import { CartLineItems } from "@/components/checkout/cart-line-items"
 import { Icons } from "@/components/icons"
 
-// import { getCartAction } from "@/app/_actions/cart"
-
 export function CartSheet() {
+  /**
+   * FIXME:Unhandled Runtime Error
+   * Error: could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+   */
+  // const currentValue = useSelector(selectCount)
+  // const dispatch = useDispatch()
+
   const itemCount = 0
   const avatarURL = "https://picsum.photos/id/237/800/800"
   const hasItem = itemCount > 0
