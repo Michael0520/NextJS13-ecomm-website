@@ -49,13 +49,13 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   })
 
   const increment = () => {
-    dispatch(counterSlice.actions.increment())
-    form.setValue("quantity", currentValue + 1)
+    const currentQuantity = form.getValues("quantity")
+    form.setValue("quantity", currentQuantity + 1)
   }
 
   const decrement = () => {
-    dispatch(counterSlice.actions.decrement())
-    form.setValue("quantity", Math.max(0, currentValue - 1))
+    const currentQuantity = form.getValues("quantity")
+    form.setValue("quantity", Math.max(0, currentQuantity - 1))
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,11 +66,9 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   }
 
   const onSubmit = (data: Inputs) => {
-    // TODO:Redux Update Cart
-    // await addToCartAction({
-    //   productId,
-    //   quantity: data.quantity,
-    // })
+    const quantity = form.getValues("quantity")
+    dispatch(counterSlice.actions.incrementByAmount(quantity))
+
     toast.success("Added to cart.")
   }
 

@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 
@@ -24,14 +26,9 @@ import {
 import { Icons } from "@/components/icons"
 
 export function CartSheet() {
-  /**
-   * FIXME:Unhandled Runtime Error
-   * Error: could not find react-redux context value; please ensure the component is wrapped in a <Provider>
-   */
-  // const currentValue = useSelector(selectCount)
-  // const dispatch = useDispatch()
+  const currentValue = useSelector(selectCount)
 
-  const itemCount = 0
+  const itemCount = currentValue
   const avatarURL = "https://picsum.photos/id/237/800/800"
   const hasItem = itemCount > 0
 
