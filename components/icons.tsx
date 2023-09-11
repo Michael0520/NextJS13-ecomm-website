@@ -1,16 +1,21 @@
 import {
   ChevronLeft,
   ChevronRight,
+  CreditCard,
+  DollarSign,
   Image,
   Loader2,
   LucideProps,
+  Menu,
   Minus,
   Moon,
   Plus,
   Search,
+  ShoppingBag,
   ShoppingCart,
   SunMedium,
   ThumbsUp,
+  User,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -28,6 +33,11 @@ export const Icons = {
   spinner: Loader2,
   recommend: ThumbsUp,
   ShoppingCart: ShoppingCart,
+  menu: Menu,
+  user: User,
+  billing: CreditCard,
+  store: ShoppingBag,
+  dollarSign: DollarSign,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
