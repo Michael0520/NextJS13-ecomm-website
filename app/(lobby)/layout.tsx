@@ -4,7 +4,7 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function LobbyLayout({ children }: RootLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <SiteHeader />
