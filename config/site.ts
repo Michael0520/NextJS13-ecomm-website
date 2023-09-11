@@ -1,13 +1,20 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "NextJS13-ecomm-website",
+  name: "Modern eats",
   description:
     "A modern e-commerce website example built with Next.js 13.",
   mainNav: [
     {
-      title: "Products",
-      href: "/products",
+      title: "Lobby",
+      items: [
+        {
+          title: "Products",
+          href: "/products",
+          description: "All the products we have to offer.",
+          items: [],
+        }
+      ]
     },
   ],
   links: {
