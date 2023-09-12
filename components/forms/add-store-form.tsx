@@ -6,6 +6,12 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
+import {
+  counterSlice,
+  selectCount,
+  useDispatch,
+  useSelector,
+} from "@/lib/redux"
 import { updateCartItemSchema } from "@/lib/validations/cart"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,8 +25,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
-// import { addToCartAction } from "@/app/_actions/cart"
-
 interface AddToCartFormProps {
   productId: number
 }
@@ -28,6 +32,11 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
+  const currentValue = useSelector(selectCount)
+  const dispatch = useDispatch()
+
+  console.log("currentValue", currentValue)
+
   const id = useId()
   const [isPending, startTransition] = useTransition()
 
@@ -40,11 +49,13 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   })
 
   const increment = () => {
-    form.setValue("quantity", form.getValues("quantity") + 1)
+    const currentQuantity = form.getValues("quantity")
+    form.setValue("quantity", currentQuantity + 1)
   }
 
   const decrement = () => {
-    form.setValue("quantity", Math.max(0, form.getValues("quantity") - 1))
+    const currentQuantity = form.getValues("quantity")
+    form.setValue("quantity", Math.max(0, currentQuantity - 1))
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,11 +66,9 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   }
 
   const onSubmit = (data: Inputs) => {
-    // TODO:Redux Update Cart
-    // await addToCartAction({
-    //   productId,
-    //   quantity: data.quantity,
-    // })
+    const quantity = form.getValues("quantity")
+    dispatch(counterSlice.actions.incrementByAmount(quantity))
+
     toast.success("Added to cart.")
   }
 

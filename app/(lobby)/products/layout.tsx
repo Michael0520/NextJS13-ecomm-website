@@ -1,5 +1,3 @@
-import { SiteHeader } from "@/components/site-header"
-
 interface LobbyLayoutProps {
   children: React.ReactNode
 }
