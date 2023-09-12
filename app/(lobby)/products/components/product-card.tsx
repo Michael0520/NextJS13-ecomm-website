@@ -1,13 +1,10 @@
 import React from "react"
 import Image from "next/image"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { ProductType } from "@/lib/validations/product"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Icons } from "@/components/icons"
 
 export enum CardType {
   Basic = "Basic",
@@ -15,88 +12,75 @@ export enum CardType {
   SoldOut = "SoldOut",
 }
 
-interface ProductCardProps {
+interface ProductCardProps extends Omit<ProductType, "footer"> {
   type: CardType
-  title?: string
-  description?: string
-  content?: string
-  footer?: string
 }
 
-// 價格和標籤樣式
-enum PriceStyles {
-  Basic = "text-gray-600",
-  Hot = "text-red-600 font-bold",
-  SoldOut = "line-through text-gray-400",
-}
+const renderBadge = (type: CardType) =>
+  type === CardType.Hot && (
+    <div className="absolute right-0 top-0 z-30 m-2">
+      <span className="rounded-full bg-red-500 px-2 py-1 text-white">
+        熱售中
+      </span>
+    </div>
+  )
 
-const renderBadge = (type: CardType) => {
-  if (type === CardType.Hot) {
-    return (
-      <div className="absolute right-0 top-0 z-30 m-2">
-        {type === CardType.Hot && (
-          <span className="rounded-full bg-red-500 px-2 py-1 text-white">
-            熱售中
-          </span>
-        )}
-      </div>
-    )
-  }
-  return null
-}
-
-const soldOutCover = (type: CardType) => {
-  if (type === CardType.SoldOut) {
-    return (
-      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
-        <span className="text-4xl font-bold text-white">售完</span>
-      </div>
-    )
-  }
-  return null
-}
+const soldOutCover = (type: CardType) =>
+  type === CardType.SoldOut && (
+    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
+      <span className="text-4xl font-bold text-white">售完</span>
+    </div>
+  )
 
 const ProductCard: React.FC<ProductCardProps> = ({
   type,
-  title,
-  description,
-  content,
-  footer,
+  name,
+  inventory,
+  images,
+  price,
 }) => {
-  const imageURL =
-    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+  const mainImage = images ? images[0] : null
 
   return (
-    <Card className="h-full transition duration-500 hover:z-10 hover:scale-105 hover:shadow-2xl">
+    <Card className="h-full overflow-hidden transition duration-500 hover:z-10 hover:scale-105 hover:shadow-2xl">
       <div className="relative">
-        {/* Hot Badge */}
         {renderBadge(type)}
 
-        {/* Image */}
         <div className="relative z-10 h-48 w-full">
-          <Image
-            src={imageURL}
-            alt={title || "Image"}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-          />
-          {/* Sold Out Cover */}
+          {mainImage ? (
+            <Image
+              src={mainImage}
+              alt={name || "Image"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-secondary">
+              <Icons.placeholder
+                className="h-9 w-9 text-muted-foreground"
+                aria-hidden="true"
+              />
+            </div>
+          )}
           {soldOutCover(type)}
         </div>
 
-        {/* Title & Description */}
-        <CardHeader className="py-2">
-          <CardTitle>{title || "卡片標題"}</CardTitle>
-          <CardDescription>{description || "卡片描述"}</CardDescription>
+        <CardHeader className="py-3">
+          <CardTitle>{name || "卡片標題"}</CardTitle>
         </CardHeader>
       </div>
 
-      {/* Content & Footer */}
-      <CardContent className="py-2">
-        <span className={`${PriceStyles[type]}`}>
-          商品價格：${content || "99"}
-        </span>
+      <CardContent className="flex flex-col items-start gap-2 py-3">
+        <Badge className="mt-2 text-xs sm:mt-0">
+          庫存：{inventory || "未知"}
+        </Badge>
+        <div className="flex w-full items-center justify-between">
+          <span className="text-3xl font-bold text-gray-900 dark:text-white">
+            ${price}
+          </span>
+          <Icons.ArrowRightCircle />
+        </div>
       </CardContent>
     </Card>
   )

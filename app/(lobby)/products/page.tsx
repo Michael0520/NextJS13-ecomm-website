@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import productListData from "@/data/productList.json"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -8,16 +9,6 @@ import { Shell } from "@/components/shells/shell"
 import Breadcrumb from "./components/Breadcrumb"
 import ProductCard, { CardType } from "./components/product-card"
 import { SidebarNav } from "./components/sidebar-nav"
-
-interface ProductInfo {
-  id: string
-  type: CardType
-  hasImage?: boolean
-  title?: string
-  description?: string
-  content?: string
-  footer?: string
-}
 
 const IndexPage = () => {
   const breadCrumbList = [
@@ -51,27 +42,6 @@ const IndexPage = () => {
       href: "/fish",
     },
   ]
-
-  const products: ProductInfo[] = Array.from({ length: 20 }, (_, i) => {
-    let type: CardType
-
-    if (i % 3 === 0) {
-      type = CardType.Basic
-    } else if (i % 3 === 1) {
-      type = CardType.Hot
-    } else {
-      type = CardType.SoldOut
-    }
-
-    return {
-      id: `${i}`,
-      type,
-      title: `${CardType[type]} 商品 ${i + 1}`,
-      description: `這是 ${CardType[type]} 商品的描述`,
-      content: `99`,
-      footer: `這是 ${CardType[type]} 商品的底部資訊`,
-    }
-  })
 
   return (
     <Shell>
@@ -125,15 +95,15 @@ const IndexPage = () => {
         </Button>
       </section>
       {/* Outlet about Left Sidebar , Right Product List */}
-      <section className="flex flex-col space-y-8  overflow-hidden px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="overflow-x-auto lg:w-1/5 lg:overflow-x-visible">
+      <section className="flex flex-col space-y-8 overflow-hidden px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <aside className="overflow-x-auto lg:w-1/6 lg:overflow-x-visible">
           <SidebarNav items={sidebarNavItems} />
         </aside>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product, index) => (
+        <div className=" grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {productListData.map((product, index) => (
             <Link href={`/product/${product.id}`} key={product.id}>
-              <ProductCard {...product} />
+              <ProductCard {...product} type={product.type as CardType} />
             </Link>
           ))}
         </div>
