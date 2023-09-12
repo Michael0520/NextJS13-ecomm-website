@@ -25,6 +25,79 @@ import {
 // import { CartLineItems } from "@/components/checkout/cart-line-items"
 import { Icons } from "@/components/icons"
 
+const NoItemsInCart = () => {
+  return (
+    <div className="flex h-full flex-col items-center justify-center space-y-1">
+      <Icons.ShoppingCart
+        className="mb-4 h-16 w-16 text-muted-foreground"
+        aria-hidden="true"
+      />
+      <div className="text-xl font-medium text-muted-foreground">
+        Your cart is empty
+      </div>
+      <SheetTrigger asChild>
+        <Link
+          aria-label="Add items to your cart to checkout"
+          href="/products"
+          className={cn(
+            buttonVariants({
+              variant: "link",
+              size: "sm",
+              className: "text-sm text-muted-foreground",
+            })
+          )}
+        >
+          Add items to your cart to checkout
+        </Link>
+      </SheetTrigger>
+    </div>
+  )
+}
+
+const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
+  return (
+    <>
+      <div className="flex flex-1 flex-col gap-5 overflow-hidden">
+        {/* <CartLineItems items={cartLineItems} /> */}
+      </div>
+      <div className="grid gap-1.5 pr-6 text-sm">
+        <Separator className="mb-2" />
+        <div className="flex">
+          <span className="flex-1">Subtotal</span>
+          <span>{itemCount}</span>
+        </div>
+        <div className="flex">
+          <span className="flex-1">Shipping</span>
+          <span>Free</span>
+        </div>
+        <div className="flex">
+          <span className="flex-1">Taxes</span>
+          <span>Calculated at checkout</span>
+        </div>
+        <Separator className="mt-2" />
+        <div className="flex">
+          <span className="flex-1">Total</span>
+          <span>{itemCount}</span>
+        </div>
+        <SheetFooter className="mt-1.5">
+          <SheetTrigger asChild>
+            <Link
+              aria-label="View your cart"
+              href="/cart"
+              className={buttonVariants({
+                size: "sm",
+                className: "w-full",
+              })}
+            >
+              Continue to checkout
+            </Link>
+          </SheetTrigger>
+        </SheetFooter>
+      </div>
+    </>
+  )
+}
+
 export function CartSheet() {
   const currentValue = useSelector(selectCount)
 
@@ -88,72 +161,7 @@ export function CartSheet() {
         <div className="pr-6">
           <Separator />
         </div>
-        {hasItem ? (
-          <>
-            <div className="flex flex-1 flex-col gap-5 overflow-hidden">
-              {/* <CartLineItems items={cartLineItems} /> */}
-            </div>
-            <div className="grid gap-1.5 pr-6 text-sm">
-              <Separator className="mb-2" />
-              <div className="flex">
-                <span className="flex-1">Subtotal</span>
-                <span>{itemCount}</span>
-              </div>
-              <div className="flex">
-                <span className="flex-1">Shipping</span>
-                <span>Free</span>
-              </div>
-              <div className="flex">
-                <span className="flex-1">Taxes</span>
-                <span>Calculated at checkout</span>
-              </div>
-              <Separator className="mt-2" />
-              <div className="flex">
-                <span className="flex-1">Total</span>
-                <span>{itemCount}</span>
-              </div>
-              <SheetFooter className="mt-1.5">
-                <SheetTrigger asChild>
-                  <Link
-                    aria-label="View your cart"
-                    href="/cart"
-                    className={buttonVariants({
-                      size: "sm",
-                      className: "w-full",
-                    })}
-                  >
-                    Continue to checkout
-                  </Link>
-                </SheetTrigger>
-              </SheetFooter>
-            </div>
-          </>
-        ) : (
-          <div className="flex h-full flex-col items-center justify-center space-y-1">
-            <Icons.ShoppingCart
-              className="mb-4 h-16 w-16 text-muted-foreground"
-              aria-hidden="true"
-            />
-            <div className="text-xl font-medium text-muted-foreground">
-              Your cart is empty
-            </div>
-            <SheetTrigger asChild>
-              <Link
-                aria-label="Add items to your cart to checkout"
-                href="/products"
-                className={cn(
-                  buttonVariants({
-                    variant: "link",
-                    size: "sm",
-                    className: "text-sm text-muted-foreground",
-                  })
-                )}
-              >
-                Add items to your cart to checkout
-              </Link>
-            </SheetTrigger>
-          </div>
-        )}
+        {hasItem ? <HasItemsInCart {...{ itemCount }} /> : <NoItemsInCart />}
       </SheetContent>
     </Sheet>
   )
