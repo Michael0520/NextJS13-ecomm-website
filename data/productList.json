@@ -1,0 +1,72 @@
+[
+    {
+        "id": "1",
+        "name": "Laptop",
+        "description": "A high performance laptop.",
+        "type": "Basic",
+        "price": 99,
+        "inventory": 10,
+        "footer": "Limited stock",
+        "images": [
+            "https://picsum.photos/id/250/800/800",
+            "https://picsum.photos/id/251/800/800",
+            "https://picsum.photos/id/252/800/800"
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Smartphone",
+        "description": "Latest model with amazing features.",
+        "type": "Hot",
+        "price": 992,
+        "inventory": 25,
+        "footer": "Hot Item",
+        "images": [
+            "https://picsum.photos/id/255/800/800",
+            "https://picsum.photos/id/256/800/800",
+            "https://picsum.photos/id/257/800/800"
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Headphones",
+        "description": "Wireless and noise-cancelling.",
+        "type": "SoldOut",
+        "price": 93,
+        "inventory": 0,
+        "footer": "Sold Out",
+        "images": [
+            "https://picsum.photos/id/258/800/800",
+            "https://picsum.photos/id/259/800/800",
+            "https://picsum.photos/id/260/800/800"
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Camera",
+        "description": "High resolution, 4K supported.",
+        "type": "Basic",
+        "price": 9912,
+        "inventory": 3,
+        "footer": "Last items",
+        "images": [
+            "https://picsum.photos/id/261/800/800",
+            "https://picsum.photos/id/262/800/800",
+            "https://picsum.photos/id/263/800/800"
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Television",
+        "description": "Smart TV with voice control.",
+        "type": "Hot",
+        "price": 99231,
+        "inventory": 7,
+        "footer": "Almost Gone",
+        "images": [
+            "https://picsum.photos/id/264/800/800",
+            "https://picsum.photos/id/265/800/800",
+            "https://picsum.photos/id/266/800/800"
+        ]
+    }
+]
