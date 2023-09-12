@@ -1,4 +1,6 @@
 import {
+  AlertTriangle,
+  ArrowRightCircle,
   ChevronLeft,
   ChevronRight,
   CreditCard,
@@ -28,6 +30,7 @@ export const Icons = {
   placeholder: Image,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  ArrowRightCircle: ArrowRightCircle,
   remove: Minus,
   add: Plus,
   spinner: Loader2,
@@ -38,6 +41,7 @@ export const Icons = {
   billing: CreditCard,
   store: ShoppingBag,
   dollarSign: DollarSign,
+  warning: AlertTriangle,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>

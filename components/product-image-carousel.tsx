@@ -1,8 +1,7 @@
 "use client"
 
-import * as React from "react"
+import { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
-import { type StoredFile } from "@/types"
 import { AspectRatio } from "@radix-ui/react-aspect-ratio"
 import useEmblaCarousel, {
   type EmblaCarouselType,
@@ -15,7 +14,7 @@ import { Icons } from "@/components/icons"
 
 interface ProductImageCarouselProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  images: StoredFile[]
+  images: string[]
   options?: EmblaOptionsType
 }
 
@@ -27,25 +26,25 @@ export function ProductImageCarousel({
 }: ProductImageCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(options)
 
-  const [prevBtnDisabled, setPrevBtnDisabled] = React.useState(true)
-  const [nextBtnDisabled, setNextBtnDisabled] = React.useState(true)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const scrollPrev = React.useCallback(
+  const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
     [emblaApi]
   )
-  const scrollNext = React.useCallback(
+  const scrollNext = useCallback(
     () => emblaApi && emblaApi.scrollNext(),
     [emblaApi]
   )
 
-  const scrollTo = React.useCallback(
+  const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
     [emblaApi]
   )
 
-  const handleKeyDown = React.useCallback(
+  const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.key === "ArrowLeft") {
         scrollPrev()
@@ -56,13 +55,13 @@ export function ProductImageCarousel({
     [scrollNext, scrollPrev]
   )
 
-  const onSelect = React.useCallback((emblaApi: EmblaCarouselType) => {
+  const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
     setSelectedIndex(emblaApi.selectedScrollSnap())
     setPrevBtnDisabled(!emblaApi.canScrollPrev())
     setNextBtnDisabled(!emblaApi.canScrollNext())
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!emblaApi) return
 
     onSelect(emblaApi)
@@ -107,8 +106,8 @@ export function ProductImageCarousel({
                   role="group"
                   key={index}
                   aria-roledescription="slide"
-                  src={image.url}
-                  alt={image.name}
+                  src={image}
+                  alt={image}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover"
@@ -148,8 +147,8 @@ export function ProductImageCarousel({
             >
               <div className="absolute inset-0 z-10 bg-zinc-950/20 group-hover:bg-zinc-950/40" />
               <Image
-                src={image.url}
-                alt={image.name}
+                src={image}
+                alt={image}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 fill
               />
