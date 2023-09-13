@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useTransition } from "react"
+import React, { useCallback, useId, useTransition } from "react"
 import type { CartLineItem } from "@/types"
 
 import { cartSlice, useDispatch } from "@/lib/redux"
@@ -13,43 +13,51 @@ interface UpdateCartProps {
 }
 
 export function UpdateCart({ cartLineItem }: UpdateCartProps) {
+  const { quantity } = cartLineItem
+
   const id = useId()
   const [isPending, startTransition] = useTransition()
   const dispatch = useDispatch()
 
-  // Decrement quantity
-  const handleDecrement = () => {
-    const updatedItem = { ...cartLineItem, quantity: cartLineItem.quantity - 1 }
-    dispatch(cartSlice.actions.updateItem(updatedItem))
-  }
+  const handleUpdateItem = useCallback(
+    (updatedQuantity: number) => {
+      const updatedItem = { ...cartLineItem, quantity: updatedQuantity }
+      dispatch(cartSlice.actions.updateItem(updatedItem))
+    },
+    [cartLineItem, dispatch]
+  )
 
-  // Increment quantity
-  const handleIncrement = () => {
-    const updatedItem = { ...cartLineItem, quantity: cartLineItem.quantity + 1 }
-    dispatch(cartSlice.actions.updateItem(updatedItem))
-  }
+  const handleAction = useCallback(
+    (action: Function) => () => {
+      startTransition(() => {
+        try {
+          action()
+        } catch (err) {
+          console.log(err)
+        }
+      })
+    },
+    [startTransition]
+  )
 
-  // remove product
-  const handleDelete = () => {
+  const handleDecrement = handleAction(() => handleUpdateItem(quantity - 1))
+  const handleIncrement = handleAction(() => handleUpdateItem(quantity + 1))
+  const handleDelete = handleAction(() =>
     dispatch(cartSlice.actions.removeItem(Number(cartLineItem.id)))
-  }
+  )
 
-  // update quantity
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedItem = { ...cartLineItem, quantity: Number(e.target.value) }
-    dispatch(cartSlice.actions.updateItem(updatedItem))
-  }
-
-  const handleAction = (action: Function) => () => {
-    startTransition(async () => {
-      try {
-        console.log("action")
-        action()
-      } catch (err) {
-        console.log(err)
-      }
-    })
-  }
+  const handleQuantityChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      startTransition(() => {
+        try {
+          handleUpdateItem(Number(e.target.value))
+        } catch (err) {
+          console.log(err)
+        }
+      })
+    },
+    [startTransition, handleUpdateItem]
+  )
 
   return (
     <div className="xs:w-auto xs:justify-normal flex w-full items-center justify-between space-x-2">
@@ -60,7 +68,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-r-none"
-          onClick={handleAction(handleDecrement)}
+          onClick={handleDecrement}
           disabled={isPending}
         >
           <Icons.remove className="h-3 w-3" aria-hidden="true" />
@@ -72,11 +80,8 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
           type="number"
           min="0"
           className="h-8 w-14 rounded-none border-x-0"
-          value={cartLineItem.quantity}
-          onChange={(e) => {
-            const action = handleAction(() => handleQuantityChange(e))
-            action()
-          }}
+          value={quantity}
+          onChange={handleQuantityChange}
           disabled={isPending}
         />
         {/* increment */}
@@ -85,7 +90,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-l-none"
-          onClick={handleAction(handleIncrement)}
+          onClick={handleIncrement}
           disabled={isPending}
         >
           <Icons.add className="h-3 w-3" aria-hidden="true" />
@@ -98,7 +103,7 @@ export function UpdateCart({ cartLineItem }: UpdateCartProps) {
         variant="outline"
         size="icon"
         className="h-8 w-8"
-        onClick={handleAction(handleDelete)}
+        onClick={handleDelete}
         disabled={isPending}
       >
         <Icons.trash className="h-3 w-3" aria-hidden="true" />
