@@ -139,14 +139,8 @@ export function CartSheet() {
               className={`flex items-center space-x-2 overflow-hidden rounded-full`}
               variant="outline"
             >
-              <div className="relative -ml-2 h-8 w-8">
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  className="absolute inset-0 rounded-full"
-                  alt="shopping-card-avatar"
-                  src={avatarURL}
-                />
+              <div className="relative -ml-2 flex h-8 w-8 items-center">
+                <Icons.UserCircle />
               </div>
               <span className="text-sm">{`${itemCount} items`}</span>
               <span className="mx-1 text-sm">|</span>
