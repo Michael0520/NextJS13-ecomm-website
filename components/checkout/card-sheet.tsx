@@ -3,13 +3,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import {
-  cartSlice,
-  selectCartItems,
-  useDispatch,
-  useSelector,
-} from "@/lib/redux"
-import { cn } from "@/lib/utils"
+import { selectCartItems, useSelector } from "@/lib/redux"
+import { cn, formatPrice } from "@/lib/utils"
+import { CartType } from "@/lib/validations/cart"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -54,10 +50,15 @@ const NoItemsInCart = () => {
   )
 }
 
-const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
-  const itemList = useSelector(selectCartItems) // 新增這一行
-  // const itemCount = useSelector(selectCartCount); // 新增這一行
-
+const HasItemsInCart = ({
+  itemList,
+  itemCount,
+  cartTotal,
+}: {
+  itemList: CartType[]
+  itemCount: number
+  cartTotal: number
+}) => {
   return (
     <>
       <div className="flex flex-1 flex-col gap-5 overflow-hidden">
@@ -65,23 +66,29 @@ const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
       </div>
       <div className="grid gap-1.5 pr-6 text-sm">
         <Separator className="mb-2" />
+        {/* Subtotal */}
         <div className="flex">
           <span className="flex-1">Subtotal</span>
-          <span>{itemCount}</span>
+          <span>{formatPrice(cartTotal.toFixed(2))}</span>
         </div>
+        {/* Shipping */}
         <div className="flex">
           <span className="flex-1">Shipping</span>
           <span>Free</span>
         </div>
+        {/* Taxes */}
         <div className="flex">
           <span className="flex-1">Taxes</span>
           <span>Calculated at checkout</span>
         </div>
         <Separator className="mt-2" />
+        {/* TODO: Taxes Feature */}
+        {/* Total = Subtotal + Taxes */}
         <div className="flex">
           <span className="flex-1">Total</span>
-          <span>{itemCount}</span>
+          <span>{formatPrice(cartTotal.toFixed(2))}</span>
         </div>
+        {/* TODO: Cart Detail */}
         <SheetFooter className="mt-1.5">
           <SheetTrigger asChild>
             <Link
@@ -102,11 +109,13 @@ const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
 }
 
 export function CartSheet() {
-  const cartItems = useSelector(selectCartItems)
-  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
+  const itemList = useSelector(selectCartItems)
+  const itemCount = itemList.reduce((acc, item) => acc + item.quantity, 0)
   const hasItem = itemCount > 0
-
-  const avatarURL = "https://picsum.photos/id/237/800/800"
+  const cartTotal = itemList.reduce(
+    (total, item) => total + Number(item.quantity) * Number(item.price),
+    0
+  )
 
   return (
     <Sheet>
@@ -158,7 +167,11 @@ export function CartSheet() {
         <div className="pr-6">
           <Separator />
         </div>
-        {hasItem ? <HasItemsInCart {...{ itemCount }} /> : <NoItemsInCart />}
+        {hasItem ? (
+          <HasItemsInCart {...{ itemCount, itemList, cartTotal }} />
+        ) : (
+          <NoItemsInCart />
+        )}
       </SheetContent>
     </Sheet>
   )

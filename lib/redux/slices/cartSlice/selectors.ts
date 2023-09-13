@@ -14,3 +14,9 @@ export const selectCartStatus = (state: ReduxState) => state.cart.status
 export const selectTotalItemsInCart = (state: ReduxState) => {
   return state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
 }
+export const selectTotalPriceInCart = (state: ReduxState) => {
+    return state.cart.items.reduce((acc, item) => {
+        return acc + (item.price * item.quantity);
+    }, 0);
+}
+
