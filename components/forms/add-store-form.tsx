@@ -1,18 +1,14 @@
 "use client"
 
 import { useId, useTransition } from "react"
+import productListData from "@/data/productList.json"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
-import {
-  counterSlice,
-  selectCount,
-  useDispatch,
-  useSelector,
-} from "@/lib/redux"
-import { updateCartItemSchema } from "@/lib/validations/cart"
+import { cartSlice, useDispatch } from "@/lib/redux"
+import { CartType, updateCartItemSchema } from "@/lib/validations/cart"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,18 +22,16 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
 interface AddToCartFormProps {
-  productId: number
+  productId: string
 }
 
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
-  const currentValue = useSelector(selectCount)
   const dispatch = useDispatch()
 
-  console.log("currentValue", currentValue)
-
   const id = useId()
+  console.log(id)
   const [isPending, startTransition] = useTransition()
 
   // react-hook-form
@@ -66,8 +60,25 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   }
 
   const onSubmit = (data: Inputs) => {
-    const quantity = form.getValues("quantity")
-    dispatch(counterSlice.actions.incrementByAmount(quantity))
+    const targetProduct = productListData.find((item) => item.id === productId)
+
+    if (!targetProduct) {
+      // 如果產品不存在，則返回或處理錯誤
+      console.error("Product not found")
+      return
+    }
+
+    const { id, name, price, images } = targetProduct
+
+    const payload: CartType = {
+      id,
+      name,
+      price,
+      images,
+      quantity: data.quantity, // formValue
+    }
+
+    dispatch(cartSlice.actions.addItem(payload))
 
     toast.success("Added to cart.")
   }
