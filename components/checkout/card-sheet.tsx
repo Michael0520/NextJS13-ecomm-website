@@ -4,8 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 
 import {
-  counterSlice,
-  selectCount,
+  cartSlice,
+  selectCartItems,
   useDispatch,
   useSelector,
 } from "@/lib/redux"
@@ -21,9 +21,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-// TODO:cart-items-ui
-// import { CartLineItems } from "@/components/checkout/cart-line-items"
 import { Icons } from "@/components/icons"
+
+import { CartLineItems } from "./card-line-items"
 
 const NoItemsInCart = () => {
   return (
@@ -55,10 +55,13 @@ const NoItemsInCart = () => {
 }
 
 const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
+  const itemList = useSelector(selectCartItems) // 新增這一行
+  // const itemCount = useSelector(selectCartCount); // 新增這一行
+
   return (
     <>
       <div className="flex flex-1 flex-col gap-5 overflow-hidden">
-        {/* <CartLineItems items={cartLineItems} /> */}
+        <CartLineItems items={itemList} />
       </div>
       <div className="grid gap-1.5 pr-6 text-sm">
         <Separator className="mb-2" />
@@ -99,11 +102,11 @@ const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
 }
 
 export function CartSheet() {
-  const currentValue = useSelector(selectCount)
-
-  const itemCount = currentValue
-  const avatarURL = "https://picsum.photos/id/237/800/800"
+  const cartItems = useSelector(selectCartItems)
+  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
   const hasItem = itemCount > 0
+
+  const avatarURL = "https://picsum.photos/id/237/800/800"
 
   return (
     <Sheet>

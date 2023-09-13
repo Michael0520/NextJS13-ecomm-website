@@ -27,7 +27,6 @@ const ProductPage = ({ params }: ProductPageProps) => {
   )
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
-    const paresIntId = Number(id)
     return (
       <Shell>
         <div className="flex flex-col gap-8 md:flex-row md:gap-16">
@@ -53,7 +52,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
             <RatingBadge className="mb-4" />
 
             {/* 數量選擇與添加到購物車的按鈕 */}
-            <AddToCartForm productId={paresIntId} />
+            <AddToCartForm productId={id} />
 
             <Separator className="mt-5" />
             {/* 產品描述 */}

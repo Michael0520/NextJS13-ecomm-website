@@ -7,7 +7,7 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import { CartSheet } from "./card-sheet"
+import { CartSheet } from "./checkout/card-sheet"
 import { Combobox } from "./combobox"
 import { MobileNav } from "./layouts/mobile-nav"
 
