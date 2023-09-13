@@ -3,13 +3,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import {
-  cartSlice,
-  selectCartItems,
-  useDispatch,
-  useSelector,
-} from "@/lib/redux"
+import { selectCartItems, useSelector } from "@/lib/redux"
 import { cn } from "@/lib/utils"
+import { CartType } from "@/lib/validations/cart"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -54,10 +50,13 @@ const NoItemsInCart = () => {
   )
 }
 
-const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
-  const itemList = useSelector(selectCartItems) // 新增這一行
-  // const itemCount = useSelector(selectCartCount); // 新增這一行
-
+const HasItemsInCart = ({
+  itemList,
+  itemCount,
+}: {
+  itemList: CartType[]
+  itemCount: number
+}) => {
   return (
     <>
       <div className="flex flex-1 flex-col gap-5 overflow-hidden">
@@ -102,8 +101,8 @@ const HasItemsInCart = ({ itemCount }: { itemCount: number }) => {
 }
 
 export function CartSheet() {
-  const cartItems = useSelector(selectCartItems)
-  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
+  const itemList = useSelector(selectCartItems)
+  const itemCount = itemList.reduce((acc, item) => acc + item.quantity, 0)
   const hasItem = itemCount > 0
 
   const avatarURL = "https://picsum.photos/id/237/800/800"
@@ -164,7 +163,11 @@ export function CartSheet() {
         <div className="pr-6">
           <Separator />
         </div>
-        {hasItem ? <HasItemsInCart {...{ itemCount }} /> : <NoItemsInCart />}
+        {hasItem ? (
+          <HasItemsInCart {...{ itemCount, itemList }} />
+        ) : (
+          <NoItemsInCart />
+        )}
       </SheetContent>
     </Sheet>
   )
