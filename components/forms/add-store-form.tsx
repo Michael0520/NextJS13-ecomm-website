@@ -31,7 +31,6 @@ export function AddToCartForm({ productId }: AddToCartFormProps) {
   const dispatch = useDispatch()
 
   const id = useId()
-  console.log(id)
   const [isPending, startTransition] = useTransition()
 
   // react-hook-form
