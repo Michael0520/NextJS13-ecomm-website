@@ -52,8 +52,8 @@ const IndexPage = () => {
         <Image
           src={imageURL}
           alt="Banner Image"
-          layout="fill"
-          objectFit="cover"
+          fill
+          className="object-cover"
         />
       </section>
       {/* Page Title - Block */}
