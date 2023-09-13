@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { selectCartItems, useSelector } from "@/lib/redux"
-import { cn } from "@/lib/utils"
+import { cn, formatPrice } from "@/lib/utils"
 import { CartType } from "@/lib/validations/cart"
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -53,9 +53,11 @@ const NoItemsInCart = () => {
 const HasItemsInCart = ({
   itemList,
   itemCount,
+  cartTotal,
 }: {
   itemList: CartType[]
   itemCount: number
+  cartTotal: number
 }) => {
   return (
     <>
@@ -64,23 +66,29 @@ const HasItemsInCart = ({
       </div>
       <div className="grid gap-1.5 pr-6 text-sm">
         <Separator className="mb-2" />
+        {/* Subtotal */}
         <div className="flex">
           <span className="flex-1">Subtotal</span>
-          <span>{itemCount}</span>
+          <span>{formatPrice(cartTotal.toFixed(2))}</span>
         </div>
+        {/* Shipping */}
         <div className="flex">
           <span className="flex-1">Shipping</span>
           <span>Free</span>
         </div>
+        {/* Taxes */}
         <div className="flex">
           <span className="flex-1">Taxes</span>
           <span>Calculated at checkout</span>
         </div>
         <Separator className="mt-2" />
+        {/* TODO: Taxes Feature */}
+        {/* Total = Subtotal + Taxes */}
         <div className="flex">
           <span className="flex-1">Total</span>
-          <span>{itemCount}</span>
+          <span>{formatPrice(cartTotal.toFixed(2))}</span>
         </div>
+        {/* TODO: Cart Detail */}
         <SheetFooter className="mt-1.5">
           <SheetTrigger asChild>
             <Link
@@ -104,8 +112,10 @@ export function CartSheet() {
   const itemList = useSelector(selectCartItems)
   const itemCount = itemList.reduce((acc, item) => acc + item.quantity, 0)
   const hasItem = itemCount > 0
-
-  const avatarURL = "https://picsum.photos/id/237/800/800"
+  const cartTotal = itemList.reduce(
+    (total, item) => total + Number(item.quantity) * Number(item.price),
+    0
+  )
 
   return (
     <Sheet>
@@ -138,14 +148,17 @@ export function CartSheet() {
               className={`flex items-center space-x-2 overflow-hidden rounded-full`}
               variant="outline"
             >
-              <div className="relative -ml-2 h-8 w-8">
-                <Image
-                  layout="fill"
+              <div className="relative -ml-2 flex h-8 w-8 items-center justify-center">
+                {/* User Profile Image */}
+                {/* <Image
+                  fill
                   objectFit="cover"
                   className="absolute inset-0 rounded-full"
                   alt="shopping-card-avatar"
                   src={avatarURL}
-                />
+                /> */}
+
+                <Icons.user className="h-full w-full" />
               </div>
               <span className="text-sm">{`${itemCount} items`}</span>
               <span className="mx-1 text-sm">|</span>
@@ -164,7 +177,7 @@ export function CartSheet() {
           <Separator />
         </div>
         {hasItem ? (
-          <HasItemsInCart {...{ itemCount, itemList }} />
+          <HasItemsInCart {...{ itemCount, itemList, cartTotal }} />
         ) : (
           <NoItemsInCart />
         )}
