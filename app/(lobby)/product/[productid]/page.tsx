@@ -8,9 +8,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Separator } from "@/components/ui/separator"
-import RatingBadge from "@/components/RatingBadge"
 import { AddToCartForm } from "@/components/forms/add-store-form"
 import { ProductImageCarousel } from "@/components/product-image-carousel"
+import RatingBadge from "@/components/RatingBadge"
 import { Shell } from "@/components/shells/shell"
 
 import ProductNotFound from "./not-found"

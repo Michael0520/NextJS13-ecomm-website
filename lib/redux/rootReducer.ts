@@ -1,6 +1,6 @@
 /* Instruments */
-import { cartSlice } from './slices'
+import { cartSlice } from "./slices"
 
 export const reducer = {
-    cart: cartSlice.reducer,
+  cart: cartSlice.reducer,
 }
