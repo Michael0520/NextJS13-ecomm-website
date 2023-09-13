@@ -51,9 +51,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <Image
               src={mainImage}
               alt={name || "Image"}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
+              fill
+              className="object-cover object-center"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-secondary">

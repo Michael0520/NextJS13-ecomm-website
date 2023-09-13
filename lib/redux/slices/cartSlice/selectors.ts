@@ -1,5 +1,5 @@
 /* Instruments */
-import type { ReduxState } from '@/lib/redux'
+import type { ReduxState } from "@/lib/redux"
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -12,7 +12,7 @@ export const selectCartItems = (state: ReduxState) => state.cart.items
 export const selectCartStatus = (state: ReduxState) => state.cart.status
 
 export const selectTotalItemsInCart = (state: ReduxState) => {
-    return state.cart.items.reduce((acc, item) => acc + item.quantity, 0);
+  return state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
 }
 export const selectTotalPriceInCart = (state: ReduxState) => {
     return state.cart.items.reduce((acc, item) => {

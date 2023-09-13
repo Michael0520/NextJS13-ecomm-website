@@ -19,7 +19,8 @@ import {
   ThumbsUp,
   Trash,
   User,
-  type Icon as LucideIcon,
+  UserCircle,
+  type LucideIcon,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -44,6 +45,7 @@ export const Icons = {
   dollarSign: DollarSign,
   warning: AlertTriangle,
   trash: Trash,
+  UserCircle: UserCircle,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
