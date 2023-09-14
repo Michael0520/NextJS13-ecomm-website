@@ -1,3 +1,5 @@
+"use client"
+
 import { notFound } from "next/navigation"
 import productListData from "@/public/data/productList.json"
 
@@ -20,7 +22,7 @@ interface ProductPageProps {
   }
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+const ProductPage = ({ params }: ProductPageProps) => {
   console.log("init")
   console.log(productListData)
   const targetProduct = productListData.find(
@@ -74,3 +76,5 @@ export default async function ProductPage({ params }: ProductPageProps) {
   //   notFound()
   // }
 }
+
+export default ProductPage
