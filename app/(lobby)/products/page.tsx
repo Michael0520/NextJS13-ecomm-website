@@ -17,8 +17,19 @@ import { SidebarNav } from "./components/sidebar-nav"
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 const IndexPage = () => {
-  const { data, error } = useSWR("/api/staticdata", fetcher)
-  console.log(data)
+  if (!productListData) {
+    return null
+  }
+  console.log(productListData)
+  console.log("end")
+  // const { data, error } = useSWR("/api/staticdata", fetcher)
+  // console.log(data)
+
+  const getAPI = async () => {
+    await fetch("/api/route", {
+      method: "GET",
+    })
+  }
 
   const breadCrumbList = [
     { name: "台灣", link: "#" },
