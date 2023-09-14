@@ -6,18 +6,18 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 
-export enum CardType {
+export enum SaleStatus {
   Basic = "Basic",
   Hot = "Hot",
   SoldOut = "SoldOut",
 }
 
 interface ProductCardProps extends Omit<ProductType, "footer"> {
-  type: CardType
+  type: SaleStatus
 }
 
-const renderBadge = (type: CardType) =>
-  type === CardType.Hot && (
+const renderBadge = (type: SaleStatus) =>
+  type === SaleStatus.Hot && (
     <div className="absolute right-0 top-0 z-30 m-2">
       <span className="rounded-full bg-red-500 px-2 py-1 text-white">
         熱售中
@@ -25,8 +25,8 @@ const renderBadge = (type: CardType) =>
     </div>
   )
 
-const soldOutCover = (type: CardType) =>
-  type === CardType.SoldOut && (
+const soldOutCover = (type: SaleStatus) =>
+  type === SaleStatus.SoldOut && (
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
       <span className="text-4xl font-bold text-white">售完</span>
     </div>

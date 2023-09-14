@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { CardType } from "@/app/(lobby)/products/components/product-card"
+import { SaleStatus } from "@/app/(lobby)/products/components/product-card"
 
 export const productSchema = z.object({
   id: z.string(),
@@ -8,7 +8,7 @@ export const productSchema = z.object({
     message: "Must be at least 1 character",
   }),
   description: z.string().optional(),
-  type: z.nativeEnum(CardType),
+  type: z.nativeEnum(SaleStatus),
   inventory: z.number(),
   footer: z.string().optional(),
   images: z.array(z.string()).optional(),
