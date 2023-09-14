@@ -22,16 +22,13 @@ interface ProductPageProps {
   }
 }
 
-const ProductPage = ({ params }: ProductPageProps) => {
+const ProductPage = ({ params: { productId } }: ProductPageProps) => {
   console.log("init")
   console.log(productListData)
-  const targetProduct = productListData.find(
-    (item) => item.id === params.productId
-  )
+  const targetProduct = productListData.find((item) => item.id === productId)
 
   console.log(targetProduct)
-  console.log(params)
-  console.log(params.productId)
+  console.log(productId)
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
     return (
