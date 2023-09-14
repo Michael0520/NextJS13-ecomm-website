@@ -19,10 +19,11 @@ interface ProductPageProps {
   }
 }
 
-const ProductPage = ({ params }: ProductPageProps) => {
-  const targetProduct = productListData.find(
+const ProductPage = async ({ params }: ProductPageProps) => {
+  const targetProduct = await productListData.find(
     (item) => item.id === params.productId
   )
+  console.log(targetProduct)
   if (!targetProduct) {
     notFound()
   }
