@@ -31,6 +31,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
 
   console.log(targetProduct)
   console.log(params)
+  console.log(params.productId)
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
     return (
