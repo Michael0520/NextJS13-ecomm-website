@@ -1,5 +1,3 @@
-"use client"
-
 import { notFound } from "next/navigation"
 import { useRouter } from "next/router"
 import productListData from "@/public/data/productList.json"
@@ -27,12 +25,8 @@ const ProductPage = ({ params: { productId } }: ProductPageProps) => {
   const router = useRouter()
   console.log(router)
   console.log(router.query)
-  console.log("init")
-  console.log(productListData)
   const targetProduct = productListData.find((item) => item.id === productId)
 
-  console.log(targetProduct)
-  console.log(productId)
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
     return (
