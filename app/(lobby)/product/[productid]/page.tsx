@@ -1,10 +1,6 @@
-"use client"
-
-import { useEffect, useState } from "react"
 import { notFound } from "next/navigation"
 import productListData from "@/data/productList.json"
 
-import { ProductType } from "@/lib/validations/product"
 import {
   Accordion,
   AccordionContent,
@@ -24,23 +20,13 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ params }: ProductPageProps) => {
-  const [targetProduct, setTargetProduct] = useState<ProductType | null>(null)
+  const targetProduct = productListData.find(
+    (item) => item.id === params.productId
+  )
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const product = productListData.find(
-        (item) => item.id === params.productId
-      )
-
-      if (!product) {
-        notFound()
-      } else {
-        setTargetProduct(product as unknown as ProductType)
-      }
-    }
-
-    fetchData()
-  }, [params.productId])
+  if (!targetProduct) {
+    notFound()
+  }
 
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
