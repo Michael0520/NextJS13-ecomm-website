@@ -103,7 +103,10 @@ const IndexPage = () => {
         <div className=" grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {productListData.map((product, index) => (
             <Link href={`/product/${product.id}`} key={product.id}>
-              <ProductCard {...product} type={product.type as SaleStatus} />
+              <ProductCard
+                {...product}
+                saleStatus={product.saleStatus as SaleStatus}
+              />
             </Link>
           ))}
         </div>

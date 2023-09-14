@@ -13,11 +13,11 @@ export enum SaleStatus {
 }
 
 interface ProductCardProps extends Omit<ProductType, "footer"> {
-  type: SaleStatus
+  saleStatus: SaleStatus
 }
 
-const renderBadge = (type: SaleStatus) =>
-  type === SaleStatus.Hot && (
+const renderBadge = (saleStatus: SaleStatus) =>
+  saleStatus === SaleStatus.Hot && (
     <div className="absolute right-0 top-0 z-30 m-2">
       <span className="rounded-full bg-red-500 px-2 py-1 text-white">
         熱售中
@@ -25,15 +25,15 @@ const renderBadge = (type: SaleStatus) =>
     </div>
   )
 
-const soldOutCover = (type: SaleStatus) =>
-  type === SaleStatus.SoldOut && (
+const soldOutCover = (saleStatus: SaleStatus) =>
+  saleStatus === SaleStatus.SoldOut && (
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
       <span className="text-4xl font-bold text-white">售完</span>
     </div>
   )
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  type,
+  saleStatus,
   name,
   inventory,
   images,
@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Card className="h-full overflow-hidden transition duration-500 hover:z-10 hover:scale-105 hover:shadow-2xl">
       <div className="relative">
-        {renderBadge(type)}
+        {renderBadge(saleStatus)}
 
         <div className="relative z-10 h-48 w-full">
           {mainImage ? (
@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               />
             </div>
           )}
-          {soldOutCover(type)}
+          {soldOutCover(saleStatus)}
         </div>
 
         <CardHeader className="py-3">

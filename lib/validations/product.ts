@@ -8,7 +8,7 @@ export const productSchema = z.object({
     message: "Must be at least 1 character",
   }),
   description: z.string().optional(),
-  type: z.nativeEnum(SaleStatus),
+  saleStatus: z.nativeEnum(SaleStatus),
   inventory: z.number(),
   footer: z.string().optional(),
   images: z.array(z.string()).optional(),
