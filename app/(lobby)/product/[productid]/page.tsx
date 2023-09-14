@@ -21,11 +21,12 @@ interface ProductPageProps {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  console.log("init")
+  console.log(productListData)
   const targetProduct = productListData.find(
     (item) => item.id === params.productId
   )
 
-  console.log(productListData)
   console.log(targetProduct)
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
@@ -69,7 +70,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </Shell>
     )
   }
-  if (!targetProduct) {
-    notFound()
-  }
+  // if (!targetProduct) {
+  //   notFound()
+  // }
 }
