@@ -25,6 +25,9 @@ const ProductPage = ({ params }: ProductPageProps) => {
   const targetProduct = productListData.find(
     (item) => item.id === params.productId
   )
+
+  console.log(productListData)
+  console.log(targetProduct)
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
     return (
