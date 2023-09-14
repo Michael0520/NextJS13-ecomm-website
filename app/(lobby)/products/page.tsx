@@ -1,7 +1,11 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import productListData from "@/public/data/productList.json"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
+//useSWR allows the use of SWR inside function components
+import useSWR from "swr"
 
 import { Button } from "@/components/ui/button"
 import { Shell } from "@/components/shells/shell"
@@ -10,7 +14,12 @@ import Breadcrumb from "./components/Breadcrumb"
 import ProductCard, { CardType } from "./components/product-card"
 import { SidebarNav } from "./components/sidebar-nav"
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
 const IndexPage = () => {
+  const { data, error } = useSWR("/api/staticdata", fetcher)
+  console.log(data)
+
   const breadCrumbList = [
     { name: "台灣", link: "#" },
     { name: "台北市", link: "#" },
