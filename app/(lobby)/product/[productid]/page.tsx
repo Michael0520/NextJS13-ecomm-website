@@ -35,7 +35,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
       if (!product) {
         notFound()
       } else {
-        setTargetProduct(product)
+        setTargetProduct(product as unknown as ProductType)
       }
     }
 
