@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation"
 import productListData from "@/public/data/productList.json"
 
 import { ProductType } from "@/lib/validations/product"
@@ -13,15 +14,13 @@ import { ProductImageCarousel } from "@/components/product-image-carousel"
 import RatingBadge from "@/components/RatingBadge"
 import { Shell } from "@/components/shells/shell"
 
-import ProductNotFound from "./not-found"
-
 interface ProductPageProps {
   params: {
     productId: string
   }
 }
 
-const ProductPage = ({ params }: ProductPageProps) => {
+export default async function ProductPage({ params }: ProductPageProps) {
   const targetProduct = productListData.find(
     (item) => item.id === params.productId
   )
@@ -69,9 +68,8 @@ const ProductPage = ({ params }: ProductPageProps) => {
         </div>
       </Shell>
     )
-  } else {
-    return <ProductNotFound />
+  }
+  if (!targetProduct) {
+    notFound()
   }
 }
-
-export default ProductPage
