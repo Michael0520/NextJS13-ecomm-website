@@ -1,4 +1,4 @@
-import productListData from "@/data/productList.json"
+import productListData from "@/public/data/productList.json"
 
 import { ProductType } from "@/lib/validations/product"
 import {

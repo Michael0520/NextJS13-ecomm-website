@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import productListData from "@/data/productList.json"
+import productListData from "@/public/data/productList.json"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"

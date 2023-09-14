@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useTransition } from "react"
-import productListData from "@/data/productList.json"
+import productListData from "@/public/data/productList.json"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
