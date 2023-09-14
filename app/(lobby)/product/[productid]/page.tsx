@@ -1,6 +1,10 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { notFound } from "next/navigation"
 import productListData from "@/data/productList.json"
 
+import { ProductType } from "@/lib/validations/product"
 import {
   Accordion,
   AccordionContent,
@@ -19,14 +23,25 @@ interface ProductPageProps {
   }
 }
 
-const ProductPage = async ({ params }: ProductPageProps) => {
-  const targetProduct = await productListData.find(
-    (item) => item.id === params.productId
-  )
-  console.log(targetProduct)
-  if (!targetProduct) {
-    notFound()
-  }
+const ProductPage = ({ params }: ProductPageProps) => {
+  const [targetProduct, setTargetProduct] = useState<ProductType | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const product = productListData.find(
+        (item) => item.id === params.productId
+      )
+
+      if (!product) {
+        notFound()
+      } else {
+        setTargetProduct(product)
+      }
+    }
+
+    fetchData()
+  }, [params.productId])
+
   if (targetProduct) {
     const { name, price, description, images, id } = targetProduct
     return (
@@ -35,7 +50,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           {/* 圖片區域 */}
           <ProductImageCarousel
             className="w-full md:w-1/2"
-            images={images}
+            images={images || []}
             options={{
               loop: true,
             }}
