@@ -15,14 +15,12 @@ import { Shell } from "@/components/shells/shell"
 
 interface ProductPageProps {
   params: {
-    productId: string
+    id: string
   }
 }
 
 const ProductPage = ({ params }: ProductPageProps) => {
-  const targetProduct = productListData.find(
-    (item) => item.id === params.productId
-  )
+  const targetProduct = productListData.find((item) => item.id === params.id)
 
   if (!targetProduct) {
     notFound()
