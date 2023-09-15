@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
@@ -24,18 +24,19 @@ const IndexPage = () => {
 
   const productListData = useSelector((state) => state.products.productList)
 
-  const imageURL =
-    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+  const modifiedProductListData = useMemo(() => {
+    const hotProducts = productListData.filter(
+      (product) => product.category === "hot"
+    )
 
-  const sortProductsByHotness = (products: ProductType[]) => {
-    const hotProducts = products.filter((product) => product.category === "hot")
-    const otherProducts = products.filter(
+    const otherProducts = productListData.filter(
       (product) => product.category !== "hot"
     )
-    return [...hotProducts, ...otherProducts]
-  }
 
-  const productsByCategory = productListData.reduce<{
+    return [...hotProducts, ...otherProducts]
+  }, [productListData])
+
+  const productsByCategory = modifiedProductListData.reduce<{
     [key: string]: ProductType[]
   }>((acc, product) => {
     const { category } = product
@@ -46,7 +47,15 @@ const IndexPage = () => {
     return acc
   }, {})
 
-  const categories = Object.keys(productsByCategory)
+  const categories = useMemo(
+    () => [
+      "hot",
+      ...Object.keys(productsByCategory).filter(
+        (category) => category !== "hot"
+      ),
+    ],
+    [productsByCategory]
+  )
 
   useEffect(() => {
     setIsClient(true)
@@ -74,6 +83,9 @@ const IndexPage = () => {
       }
     }
   }, [categories, activeCategory])
+
+  const imageURL =
+    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 
   return (
     <Shell>
@@ -140,13 +152,11 @@ const IndexPage = () => {
                     <h2 className="text-2xl font-bold">{category}</h2>
                   </div>
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {sortProductsByHotness(productsByCategory[category]).map(
-                      (product, index) => (
-                        <Link href={`/product/${product.id}`} key={product.id}>
-                          <ProductCard {...product} />
-                        </Link>
-                      )
-                    )}
+                    {productsByCategory[category].map((product, index) => (
+                      <Link href={`/product/${product.id}`} key={product.id}>
+                        <ProductCard {...product} />
+                      </Link>
+                    ))}
                   </div>
                 </section>
               ))}
