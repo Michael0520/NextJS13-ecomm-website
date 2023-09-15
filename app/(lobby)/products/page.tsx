@@ -6,7 +6,7 @@ import Link from "next/link"
 import { GridIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import { useSelector } from "@/lib/redux"
-import { ProductType } from "@/lib/validations/product"
+import { ProductCategory, ProductType } from "@/lib/validations/product"
 import { Button } from "@/components/ui/button"
 import { Shell } from "@/components/shells/shell"
 
@@ -26,11 +26,11 @@ const IndexPage = () => {
 
   const modifiedProductListData = useMemo(() => {
     const hotProducts = productListData.filter(
-      (product) => product.category === "hot"
+      (product) => product.category === ProductCategory.HOT
     )
 
     const otherProducts = productListData.filter(
-      (product) => product.category !== "hot"
+      (product) => product.category !== ProductCategory.HOT
     )
 
     return [...hotProducts, ...otherProducts]
@@ -49,9 +49,9 @@ const IndexPage = () => {
 
   const categories = useMemo(
     () => [
-      "hot",
+      ProductCategory.HOT,
       ...Object.keys(productsByCategory).filter(
-        (category) => category !== "hot"
+        (category) => category !== ProductCategory.HOT
       ),
     ],
     [productsByCategory]
@@ -63,7 +63,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (activeCategory === null) {
-      const hotIndex = categories.indexOf("hot")
+      const hotIndex = categories.indexOf(ProductCategory.HOT)
       if (hotIndex !== -1) {
         setActiveCategory(hotIndex)
       } else {
