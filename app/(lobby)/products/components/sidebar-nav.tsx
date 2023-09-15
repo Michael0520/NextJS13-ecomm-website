@@ -1,43 +1,39 @@
-"use client"
-
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 
-interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href: string
-    title: string
-  }[]
+interface SidebarNavProps {
+  items: string[]
+  activeCategoryIndex: number | null
+  onClick: (index: number) => void
 }
 
-export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
-  const pathname = usePathname()
-
+export function SidebarNav({
+  items,
+  activeCategoryIndex,
+  onClick,
+  ...props
+}: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        "flex space-x-2 whitespace-nowrap lg:flex-col lg:space-x-0 lg:space-y-1 lg:whitespace-normal",
-        className
+        "flex space-x-2 whitespace-nowrap lg:flex-col lg:space-x-0 lg:space-y-1 lg:whitespace-normal"
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
+      {items.map((item, index) => (
+        <Button
+          key={item}
+          variant="ghost"
           className={cn(
-            buttonVariants({ variant: "ghost" }),
-            pathname === item.href
+            activeCategoryIndex === index
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:underline",
             "justify-start"
           )}
+          onClick={() => onClick(index)}
         >
-          {item.title}
-        </Link>
+          {item}
+        </Button>
       ))}
     </nav>
   )

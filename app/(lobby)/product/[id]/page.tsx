@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation"
-import productListData from "@/data/productList.json"
+"use client"
 
+import { notFound } from "next/navigation"
+
+import { useSelector } from "@/lib/redux"
 import {
   Accordion,
   AccordionContent,
@@ -20,6 +22,8 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ params }: ProductPageProps) => {
+  const productListData = useSelector((state) => state.products.productList)
+
   const targetProduct = productListData.find((item) => item.id === params.id)
 
   if (!targetProduct) {

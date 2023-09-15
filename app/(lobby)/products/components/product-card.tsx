@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {mainImage ? (
             <Image
               src={mainImage}
-              alt={name || "Image"}
+              alt="image"
               fill
               className="object-cover object-center"
             />
