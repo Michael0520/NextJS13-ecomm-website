@@ -1,13 +1,12 @@
 "use client"
 
 import { useId, useTransition } from "react"
-import productListData from "@/data/productList.json"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
-import { cartSlice, useDispatch } from "@/lib/redux"
+import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
 import { CartType, updateCartItemSchema } from "@/lib/validations/cart"
 import { Button } from "@/components/ui/button"
 import {
@@ -28,6 +27,8 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
+  const productListData = useSelector((state) => state.products.productList)
+
   const dispatch = useDispatch()
 
   const id = useId()

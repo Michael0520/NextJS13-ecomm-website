@@ -52,7 +52,7 @@ export function CartLineItems({
                         src={
                           item.images[0] ?? "/images/product-placeholder.webp"
                         }
-                        alt={item.images[0] ?? item.name}
+                        alt="image"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         fill
                         className="absolute object-cover"
