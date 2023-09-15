@@ -131,7 +131,7 @@ const IndexPage = () => {
       </section>
       {isClient && (
         <section className="relative flex flex-col items-start space-y-8 px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="sticky left-0 top-[84px] z-20 max-h-screen lg:w-1/6 lg:overflow-x-visible">
+          <aside className="sticky left-0 top-[84px] z-20 max-h-screen lg:w-1/6 lg:overflow-auto">
             <SidebarNav
               items={categories}
               activeCategoryIndex={activeCategory}

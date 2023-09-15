@@ -11,7 +11,7 @@ const generateImageUrls = (num: number, startIndex: number) => {
   )
 }
 
-export const fakeProductList = Array.from({ length: 20 }, (_, index) => {
+export const fakeProductList = Array.from({ length: 100 }, (_, index) => {
   return {
     id: faker.datatype.uuid(),
     name: faker.commerce.productName(),
