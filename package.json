@@ -12,7 +12,8 @@
     "preview": "next build && next start",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "test": "vitest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -27,6 +28,9 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "6.1.2",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.4.3",
     "@types/redux-logger": "^3.0.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -52,6 +56,7 @@
     "@faker-js/faker": "^8.0.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/jest": "^29.5.5",
     "@types/node": "^20.6.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
@@ -62,6 +67,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.29",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
