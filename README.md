@@ -1,6 +1,6 @@
 # NextJS13-ecomm-website
 
-A modern e-commerce website example built with Next.js 13.
+Using Next.js 13.4 and its App Router feature to develop a highly interactive and user-friendly e-commerce platform, inspired by Uber Eats. This platform will offer real-time inventory, a shopping cart system, and an intuitive user interface.
 
 ## Usage
 
