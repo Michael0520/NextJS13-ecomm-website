@@ -1,2 +1,2 @@
 export * from "./cartSlice"
-export * from "./products"
+export * from "./storeSlice"
