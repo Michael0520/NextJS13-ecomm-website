@@ -75,7 +75,8 @@ const IndexPage = () => {
 
       if (activeSection) {
         const rect = activeSection.getBoundingClientRect()
-        const offsetTop = window.pageYOffset + rect.top - 64
+        const HEADER_HEIGHT = 64
+        const offsetTop = window.pageYOffset + rect.top - HEADER_HEIGHT
         window.scrollTo({
           top: offsetTop,
           behavior: "smooth",
