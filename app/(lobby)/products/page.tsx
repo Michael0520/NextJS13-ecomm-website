@@ -22,7 +22,7 @@ const IndexPage = () => {
     setActiveCategory(index)
   }
 
-  const productListData = useSelector((state) => state.products.productList)
+  const productListData = useSelector((state) => state.storeList.productList)
 
   const modifiedProductListData = useMemo(() => {
     const hotProducts = productListData.filter(
