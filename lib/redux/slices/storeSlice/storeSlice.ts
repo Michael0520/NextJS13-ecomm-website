@@ -10,8 +10,7 @@ const initialState = {
 export const storeSlice = createSlice({
   name: "storeList",
   initialState,
-  reducers: {
-  },
+  reducers: {},
 })
 
 export default storeSlice.reducer
