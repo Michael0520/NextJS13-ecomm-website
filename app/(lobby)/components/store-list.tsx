@@ -1,12 +1,20 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 import { useSelector } from "@/lib/redux"
-import { selectAllStores } from "@/lib/redux/slices/storeSlice/seletors"
+import { selectAllStores } from "@/lib/redux/slices/storeSlice/selectors"
 
 import StoreCard from "./store-card"
 
 const StoreList = () => {
   const storeList = useSelector(selectAllStores)
+
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   return (
     <>
@@ -18,13 +26,15 @@ const StoreList = () => {
           Find the best skateboarding gears from stores around the world
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {storeList.map((store, index) => (
-          <div key={index} className="col-span-1">
-            <StoreCard store={store} />
-          </div>
-        ))}
-      </div>
+      {isClient && (
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {storeList.map((store, index) => (
+            <div key={index} className="col-span-1">
+              <StoreCard store={store} />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   )
 }
