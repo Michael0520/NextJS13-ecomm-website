@@ -51,6 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <Image
               src={mainImage}
               alt="image"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               fill
               className="object-cover object-center"
             />
