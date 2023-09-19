@@ -1,16 +1,9 @@
-"use client"
-
+import { Suspense } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
-import { OpenStatus, StoreType } from "@/lib/validations/store"
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { StoreType } from "@/lib/validations/store"
+import { Button } from "@/components/ui/button"
 
 type Props = {
   store: StoreType
@@ -20,42 +13,51 @@ const StoreCard: React.FC<Props> = ({ store }) => {
   const imgURL = store.imgURL ?? "/images/placeholder.png"
 
   return (
-    <Card className="relative h-full rounded-lg border shadow transition-all duration-300 hover:scale-105 hover:shadow-lg">
+    <div className="relative flex h-[300px] w-full flex-col overflow-hidden rounded-lg text-white shadow-md">
+      {/* Header */}
+      <div className="absolute top-1 z-10 flex w-full flex-col items-start justify-start p-3">
+        <p className="text-tiny font-bold uppercase text-white/60">
+          Your day your way
+        </p>
+        <h4 className="text-xl font-medium text-white/90">{store.name}</h4>
+      </div>
+
+      {/* Image */}
       <Image
-        className="h-32 w-full rounded-t-lg object-cover"
         src={imgURL}
         alt={store.name}
+        className="z-0 h-full w-full rounded-lg object-cover opacity-50 transition-opacity duration-300"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        width={500}
-        height={500}
+        fill
         priority
       />
-      <CardContent className="p-5">
-        <CardHeader className="mb-2">
-          <CardTitle as="h3" className="text-2xl font-bold tracking-tight">
-            {store.name}
-          </CardTitle>
-        </CardHeader>
-        <CardDescription className="mb-3">{store.description}</CardDescription>
-        <div className="mb-2 flex justify-between text-sm">
-          <span>{store.location}</span>
-          <span>{store.openingHours}</span>
+
+      {/* Footer */}
+      <div className="absolute bottom-0 z-10 flex h-auto w-full items-center overflow-hidden rounded-b-lg border-t border-gray-600 bg-black/40 p-3 backdrop-blur backdrop-saturate-150">
+        <div className="flex grow items-center gap-2">
+          {/* Icon Placeholder */}
+          <div className="relative h-11 w-10 rounded-lg bg-black">
+            <Image
+              src={imgURL}
+              alt="Breathing App Icon"
+              className="relative z-10 h-11 w-10 rounded-full bg-black"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              fill
+              priority
+            />
+          </div>
+          <div className="flex flex-col">
+            <p className="text-tiny text-white/60">{store.location}</p>
+            <p className="text-tiny line-clamp-1 text-white/60">
+              {store.description}
+            </p>
+          </div>
         </div>
-        <div className="flex justify-between">
-          <a href={`tel:${store.phone}`} className="text-sm text-blue-500">
-            {store.phone}
-          </a>
-          <Badge
-            className="w-auto"
-            variant={
-              store.openStatus === OpenStatus.OPEN ? "default" : "destructive"
-            }
-          >
-            {store.openStatus}
-          </Badge>
-        </div>
-      </CardContent>
-    </Card>
+        <Link href={`/store/${store.id}`}>
+          <Button>Shop</Button>
+        </Link>
+      </div>
+    </div>
   )
 }
 
