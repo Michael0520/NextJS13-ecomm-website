@@ -22,7 +22,7 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ params }: ProductPageProps) => {
-  const productListData = useSelector((state) => state.products.productList)
+  const productListData = useSelector((state) => state.storeList.productList)
 
   const targetProduct = productListData.find((item) => item.id === params.id)
 

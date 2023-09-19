@@ -27,7 +27,7 @@ interface AddToCartFormProps {
 type Inputs = z.infer<typeof updateCartItemSchema>
 
 export function AddToCartForm({ productId }: AddToCartFormProps) {
-  const productListData = useSelector((state) => state.products.productList)
+  const productListData = useSelector((state) => state.storeList.productList)
 
   const dispatch = useDispatch()
 

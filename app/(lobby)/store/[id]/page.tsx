@@ -13,7 +13,7 @@ import { Shell } from "@/components/shells/shell"
 import ProductCard from "./components/product-card"
 import { SidebarNav } from "./components/sidebar-nav"
 
-const IndexPage = () => {
+const IndexPage = ({ params }: { params: { id: string } }) => {
   const [isClient, setIsClient] = useState(false)
   const [activeCategory, setActiveCategory] = useState<number | null>(null)
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
@@ -22,7 +22,15 @@ const IndexPage = () => {
     setActiveCategory(index)
   }
 
-  const productListData = useSelector((state) => state.products.productList)
+  const storeData = useSelector((state) => {
+    return state.storeList.storeList.find((store) => store.id === params.id)
+  })
+
+  const { name, description, imgURL } = storeData ?? {}
+
+  const productListData = useMemo(() => {
+    return storeData?.products ?? []
+  }, [storeData])
 
   const modifiedProductListData = useMemo(() => {
     const hotProducts = productListData.filter(
@@ -40,10 +48,10 @@ const IndexPage = () => {
     [key: string]: ProductType[]
   }>((acc, product) => {
     const { category } = product
-    if (!acc[category]) {
-      acc[category] = []
+    if (!acc[category!]) {
+      acc[category!] = []
     }
-    acc[category].push(product)
+    acc[category!].push(product)
     return acc
   }, {})
 
@@ -85,15 +93,13 @@ const IndexPage = () => {
     }
   }, [categories, activeCategory])
 
-  const imageURL =
-    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-
   return (
     <Shell>
       <section className="relative h-[200px] w-full">
         <Image
-          src={imageURL}
+          src={imgURL || ""}
           alt="Banner Image"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           fill
           className="object-cover"
         />
@@ -101,10 +107,10 @@ const IndexPage = () => {
       <section className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6">
         <header className="text-left">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
-            非常厲害美食館 信義活力吳興店
+            {name || "Store Name"}
           </h1>
           <p className="mt-2 text-xl text-gray-700 dark:text-gray-300">
-            Subheading or description
+            {description || "Store Description"}
           </p>
         </header>
       </section>

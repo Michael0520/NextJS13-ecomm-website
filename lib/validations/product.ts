@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { SaleStatus } from "@/app/(lobby)/products/components/product-card"
+import { SaleStatus } from "@/app/(lobby)/store/[id]/components/product-card"
 
 export enum ProductCategory {
   HOT = "hot",

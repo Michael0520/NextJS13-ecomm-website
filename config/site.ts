@@ -8,9 +8,9 @@ export const siteConfig = {
       title: "Lobby",
       items: [
         {
-          title: "Products",
-          href: "/products",
-          description: "All the products we have to offer.",
+          title: "Stores",
+          href: "/stores",
+          description: "Find your favorite stores.",
           items: [],
         },
       ],
