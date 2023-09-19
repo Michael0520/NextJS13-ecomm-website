@@ -1,9 +1,8 @@
 import { faker } from "@faker-js/faker"
 
-import { SaleStatus } from "@/app/(lobby)/products/components/product-card"
-
 import { ProductCategory } from "../validations/product"
 import { OpenStatus, StoreType } from "../validations/store"
+import { SaleStatus } from "@/app/(lobby)/store/[id]/components/product-card"
 
 const MAX_PRODUCTS = 100
 const MAX_STORES = 10
