@@ -15,6 +15,7 @@ import {
   Search,
   ShoppingBag,
   ShoppingCart,
+  Star,
   SunMedium,
   ThumbsUp,
   Trash,
@@ -46,6 +47,7 @@ export const Icons = {
   warning: AlertTriangle,
   trash: Trash,
   UserCircle: UserCircle2,
+  star: Star,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
