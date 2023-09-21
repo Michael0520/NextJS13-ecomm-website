@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
 import { CartType } from "@/lib/validations/cart"
@@ -27,7 +28,7 @@ const StoreListPage: React.FC = () => {
   const dispatch = useDispatch()
   const [isClient, setIsClient] = useState(false)
   const storeList = useSelector((state) => state.storeList.storeList)
-  console.log(storeList)
+
   const handleAddToCart = (selectedProduct: ProductType) => {
     const { id, name, images, price } = selectedProduct
 
@@ -40,6 +41,7 @@ const StoreListPage: React.FC = () => {
     }
 
     dispatch(cartSlice.actions.addItem(cartItem))
+    toast.success("Added to cart.")
   }
 
   const allProducts = storeList.reduce(
