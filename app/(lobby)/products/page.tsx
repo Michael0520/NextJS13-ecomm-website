@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 
-import { useSelector } from "@/lib/redux"
+import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
+import { CartType } from "@/lib/validations/cart"
 import { ProductType } from "@/lib/validations/product"
 import { StoreType } from "@/lib/validations/store"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
@@ -37,9 +38,13 @@ const Star: React.FC<StarProps> = ({ full }) => (
 
 interface ProductCardProps {
   product: SelectedProductType
+  handleAddToCart: () => void
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  handleAddToCart,
+}) => {
   const { name, images, description, price } = product
 
   /**
@@ -92,15 +97,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             ${(price * 0.85).toFixed(0)}
           </span>
         </p>
-        <Button className="rounded0 px-4 py-2 ">Add to cart</Button>
+        <Button className="rounded0 px-4 py-2" onClick={handleAddToCart}>
+          Add to cart
+        </Button>
       </CardFooter>
     </Card>
   )
 }
 
 const StoreListPage: React.FC = () => {
+  const dispatch = useDispatch()
   const [isClient, setIsClient] = useState(false)
   const storeList = useSelector((state) => state.storeList.storeList)
+  const handleAddToCart = (selectedProduct: ProductType) => {
+    const { id, name, images, price } = selectedProduct
+
+    const cartItem: CartType = {
+      id,
+      name,
+      price,
+      quantity: 1,
+      images,
+    }
+
+    dispatch(cartSlice.actions.addItem(cartItem))
+  }
 
   const allProducts = storeList.reduce(
     (acc: ProductType[], store: StoreType) => {
@@ -118,15 +139,23 @@ const StoreListPage: React.FC = () => {
 
   return (
     <Shell>
+      <section className="mb-8">
+        <h3 className="text-4xl font-bold">Products</h3>
+        <p className="opacity-70">Buy products from our stores </p>
+      </section>
+      <div className="mb-4 flex gap-4">
+        <Button disabled={!isClient}>Filter</Button>
+        <Button disabled={!isClient}>Sort</Button>
+      </div>
       {isClient && (
         <>
-          <div className="mb-4 flex gap-4">
-            <Button>Filter</Button>
-            <Button>Sort</Button>
-          </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {allProducts.map((product, index) => (
-              <ProductCard key={`${product.id}-${index}`} product={product} />
+              <ProductCard
+                key={`${product.id}-${index}`}
+                product={product}
+                handleAddToCart={() => handleAddToCart(product)}
+              />
             ))}
           </div>
         </>
