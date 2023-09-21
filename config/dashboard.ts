@@ -15,7 +15,7 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Stores",
-      href: "/dashboard/stores",
+      href: "/dashboard/products",
       icon: "store",
       items: [],
     },
