@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import Link from "next/link"
 import { toast } from "sonner"
 
 import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
@@ -96,11 +97,13 @@ const StoreListPage: React.FC = () => {
       {isClient && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredProducts.map((product, index) => (
-            <ProductListCard
-              key={`${product.id}-${index}`}
-              product={product}
-              handleAddToCart={() => handleAddToCart(product)}
-            />
+            <Link href={`/product/${product.id}`} key={product.id}>
+              <ProductListCard
+                key={`${product.id}-${index}`}
+                product={product}
+                handleAddToCart={() => handleAddToCart(product)}
+              />
+            </Link>
           ))}
         </div>
       )}
