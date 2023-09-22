@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 
 import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
@@ -18,20 +18,32 @@ interface StarProps {
   full: boolean
 }
 
+// TODO:rating feature
 const Star: React.FC<StarProps> = ({ full }) => (
   <Icons.star
     className={`h-5 w-5 ${full ? "text-yellow-300" : "text-gray-300"}`}
   />
 )
 
+type PriceRange = [number, number]
+
 const StoreListPage: React.FC = () => {
   const dispatch = useDispatch()
-  const [isClient, setIsClient] = useState(false)
   const storeList = useSelector((state) => state.storeList.storeList)
+  const [isClient, setIsClient] = useState(false)
+  const [filteredStoreIds, setFilteredStoreIds] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<PriceRange>([0, 5000])
+
+  const handleStoreFilterChange = (selectedStoreIds: string[]) => {
+    setFilteredStoreIds(selectedStoreIds)
+  }
+
+  const handlePriceRangeChange = (newPriceRange: PriceRange) => {
+    setPriceRange(newPriceRange)
+  }
 
   const handleAddToCart = (selectedProduct: ProductType) => {
     const { id, name, images, price } = selectedProduct
-
     const cartItem: CartType = {
       id,
       name,
@@ -39,20 +51,25 @@ const StoreListPage: React.FC = () => {
       quantity: 1,
       images,
     }
-
     dispatch(cartSlice.actions.addItem(cartItem))
     toast.success("Added to cart.")
   }
 
-  const allProducts = storeList.reduce(
-    (acc: ProductType[], store: StoreType) => {
-      if (store.products) {
-        return [...acc, ...store.products]
+  const filteredProducts = useMemo(() => {
+    return storeList.reduce((acc: ProductType[], store: StoreType) => {
+      if (
+        store.products &&
+        (filteredStoreIds.length === 0 || filteredStoreIds.includes(store.id))
+      ) {
+        const productsInPriceRange = store.products.filter(
+          (product) =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+        )
+        return [...acc, ...productsInPriceRange]
       }
       return acc
-    },
-    []
-  )
+    }, [])
+  }, [storeList, filteredStoreIds, priceRange])
 
   useEffect(() => {
     setIsClient(true)
@@ -65,21 +82,27 @@ const StoreListPage: React.FC = () => {
         <p className="opacity-70">Buy products from our stores </p>
       </section>
       <div className="mb-4 flex gap-4">
-        <ProductListFilterSheet storeList={storeList} disabled={!isClient} />
-        <Button disabled={!isClient}>Sort</Button>
+        <ProductListFilterSheet
+          storeList={storeList}
+          disabled={!isClient}
+          onStoreFilterChange={handleStoreFilterChange}
+          priceRange={priceRange}
+          onPriceRangeChange={handlePriceRangeChange}
+        />
+        <Button disabled={!isClient} size="sm">
+          Sort
+        </Button>
       </div>
       {isClient && (
-        <>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {allProducts.map((product, index) => (
-              <ProductListCard
-                key={`${product.id}-${index}`}
-                product={product}
-                handleAddToCart={() => handleAddToCart(product)}
-              />
-            ))}
-          </div>
-        </>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredProducts.map((product, index) => (
+            <ProductListCard
+              key={`${product.id}-${index}`}
+              product={product}
+              handleAddToCart={() => handleAddToCart(product)}
+            />
+          ))}
+        </div>
       )}
     </Shell>
   )
