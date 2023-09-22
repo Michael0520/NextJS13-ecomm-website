@@ -19,7 +19,7 @@ const StoreList = () => {
   }, [])
 
   return (
-    <Shell>
+    <>
       <div className="text-center">
         <motion.h2
           initial={{ y: 100, opacity: 0 }}
@@ -38,7 +38,7 @@ const StoreList = () => {
           Find the best skateboarding gears from stores around the world
         </motion.p>
       </div>
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {isClient &&
           storeList.map((store, index) => (
             <div key={index} className="col-span-1">
@@ -46,7 +46,7 @@ const StoreList = () => {
             </div>
           ))}
       </div>
-    </Shell>
+    </>
   )
 }
 

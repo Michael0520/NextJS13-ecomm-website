@@ -34,7 +34,7 @@ const NoItemsInCart = () => {
       <SheetTrigger asChild>
         <Link
           aria-label="Add items to your cart to checkout"
-          href="/stores"
+          href="/products"
           className={cn(
             buttonVariants({
               variant: "link",
