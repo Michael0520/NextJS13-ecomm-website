@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
-    "test": "vitest"
+    "test": "vitest",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -30,6 +31,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@reduxjs/toolkit": "^1.9.5",
+    "@supabase/auth-helpers-nextjs": "^0.8.1",
+    "@supabase/supabase-js": "^2.36.0",
     "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
@@ -57,6 +60,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@next/bundle-analyzer": "^13.5.2",
     "@tailwindcss/typography": "^0.5.10",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.6.0",
@@ -64,6 +68,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/parser": "^6.7.0",
     "autoprefixer": "^10.4.15",
+    "cross-env": "^7.0.3",
     "eslint": "^8.49.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",
