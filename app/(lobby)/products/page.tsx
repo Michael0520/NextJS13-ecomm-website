@@ -4,16 +4,18 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
 
+import { DEFAULT_PRICE_RANGE, PriceRange, SortOption } from "@/config/products"
 import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
 import { CartType } from "@/lib/validations/cart"
 import { ProductType } from "@/lib/validations/product"
 import { StoreType } from "@/lib/validations/store"
-import { Button } from "@/components/ui/button"
+import { useDebounce } from "@/hooks/useDebounce"
 import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shells/shell"
 
 import ProductListCard from "./components/products-card"
-import ProductListFilterSheet from "./components/products-sheet"
+import ProductListFilterSheet from "./components/products-filter-sheet"
+import ProductListSortDropdownMenu from "./components/products-sort-dropdownMenu"
 
 interface StarProps {
   full: boolean
@@ -26,14 +28,15 @@ const Star: React.FC<StarProps> = ({ full }) => (
   />
 )
 
-type PriceRange = [number, number]
-
 const StoreListPage: React.FC = () => {
   const dispatch = useDispatch()
   const storeList = useSelector((state) => state.storeList.storeList)
   const [isClient, setIsClient] = useState(false)
   const [filteredStoreIds, setFilteredStoreIds] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<PriceRange>([0, 5000])
+  const [priceRange, setPriceRange] = useState<PriceRange>(DEFAULT_PRICE_RANGE)
+  const debouncedPrice = useDebounce(priceRange, 500)
+
+  const [sortOption, setSortOption] = useState<SortOption | null>(null)
 
   const handleStoreFilterChange = (selectedStoreIds: string[]) => {
     setFilteredStoreIds(selectedStoreIds)
@@ -64,13 +67,35 @@ const StoreListPage: React.FC = () => {
       ) {
         const productsInPriceRange = store.products.filter(
           (product) =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
+            product.price >= debouncedPrice[0] &&
+            product.price <= debouncedPrice[1]
         )
         return [...acc, ...productsInPriceRange]
       }
       return acc
     }, [])
-  }, [storeList, filteredStoreIds, priceRange])
+  }, [storeList, filteredStoreIds, debouncedPrice])
+
+  const sortedAndFilteredProducts = useMemo(() => {
+    let sortedProducts = [...filteredProducts]
+    switch (sortOption) {
+      case SortOption.PRICE_ASC:
+        sortedProducts.sort((a, b) => a.price - b.price)
+        break
+      case SortOption.PRICE_DESC:
+        sortedProducts.sort((a, b) => b.price - a.price)
+        break
+      case SortOption.NAME_ASC:
+        sortedProducts.sort((a, b) => a.name.localeCompare(b.name))
+        break
+      case SortOption.NAME_DESC:
+        sortedProducts.sort((a, b) => b.name.localeCompare(a.name))
+        break
+      default:
+        break
+    }
+    return sortedProducts
+  }, [filteredProducts, sortOption])
 
   useEffect(() => {
     setIsClient(true)
@@ -90,16 +115,21 @@ const StoreListPage: React.FC = () => {
           priceRange={priceRange}
           onPriceRangeChange={handlePriceRangeChange}
         />
-        <Button disabled={!isClient} size="sm">
-          Sort
-        </Button>
+        <ProductListSortDropdownMenu
+          disabled={!isClient}
+          sortOption={sortOption}
+          onSortChange={(option) => setSortOption(option)}
+        />
       </div>
       {isClient && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((product, index) => (
-            <Link href={`/product/${product.id}`} key={product.id}>
+          {sortedAndFilteredProducts.map((product, index) => (
+            <Link
+              href={`/product/${product.id}`}
+              key={`${product.id}-${index}-id`}
+            >
               <ProductListCard
-                key={`${product.id}-${index}`}
+                key={`${product.id}-${index}-id`}
                 product={product}
                 handleAddToCart={() => handleAddToCart(product)}
               />

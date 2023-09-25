@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 
+import { DEFAULT_PRICE_RANGE } from "@/config/products"
 import { StoreType } from "@/lib/validations/store"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -27,6 +28,9 @@ type ProductListFilterSheetProps = {
   onStoreFilterChange: (selectedStoreIds: string[]) => void
   onPriceRangeChange: (price: [number, number]) => void
 }
+
+const [MIN_PRICE_RANGE, MAX_PRICE_RANGE] = DEFAULT_PRICE_RANGE
+
 const ProductListFilterSheet = ({
   disabled,
   storeList,
@@ -74,8 +78,9 @@ const ProductListFilterSheet = ({
               Price range ($)
             </h3>
             <Slider
-              defaultValue={[33]}
-              max={100}
+              defaultValue={[MIN_PRICE_RANGE, MAX_PRICE_RANGE]}
+              min={MIN_PRICE_RANGE}
+              max={MAX_PRICE_RANGE}
               step={1}
               value={priceRange}
               onValueChange={(value: typeof priceRange) =>
