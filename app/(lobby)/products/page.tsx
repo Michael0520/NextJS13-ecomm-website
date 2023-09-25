@@ -28,13 +28,14 @@ const Star: React.FC<StarProps> = ({ full }) => (
 )
 
 type PriceRange = [number, number]
+const DEFAULT_PRICE_RANGE: PriceRange = [0, 5000]
 
 const StoreListPage: React.FC = () => {
   const dispatch = useDispatch()
   const storeList = useSelector((state) => state.storeList.storeList)
   const [isClient, setIsClient] = useState(false)
   const [filteredStoreIds, setFilteredStoreIds] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<PriceRange>([0, 5000])
+  const [priceRange, setPriceRange] = useState<PriceRange>(DEFAULT_PRICE_RANGE)
   const [sortOption, setSortOption] = useState<SortOption | null>(null)
 
   const handleStoreFilterChange = (selectedStoreIds: string[]) => {
