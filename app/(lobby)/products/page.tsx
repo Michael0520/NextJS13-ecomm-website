@@ -4,11 +4,12 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
 
-import { SortOption } from "@/config/products"
+import { DEFAULT_PRICE_RANGE, PriceRange, SortOption } from "@/config/products"
 import { cartSlice, useDispatch, useSelector } from "@/lib/redux"
 import { CartType } from "@/lib/validations/cart"
 import { ProductType } from "@/lib/validations/product"
 import { StoreType } from "@/lib/validations/store"
+import { useDebounce } from "@/hooks/useDebounce"
 import { Icons } from "@/components/icons"
 import { Shell } from "@/components/shells/shell"
 
@@ -27,15 +28,14 @@ const Star: React.FC<StarProps> = ({ full }) => (
   />
 )
 
-type PriceRange = [number, number]
-const DEFAULT_PRICE_RANGE: PriceRange = [0, 5000]
-
 const StoreListPage: React.FC = () => {
   const dispatch = useDispatch()
   const storeList = useSelector((state) => state.storeList.storeList)
   const [isClient, setIsClient] = useState(false)
   const [filteredStoreIds, setFilteredStoreIds] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<PriceRange>(DEFAULT_PRICE_RANGE)
+  const debouncedPrice = useDebounce(priceRange, 500)
+
   const [sortOption, setSortOption] = useState<SortOption | null>(null)
 
   const handleStoreFilterChange = (selectedStoreIds: string[]) => {
@@ -67,13 +67,14 @@ const StoreListPage: React.FC = () => {
       ) {
         const productsInPriceRange = store.products.filter(
           (product) =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
+            product.price >= debouncedPrice[0] &&
+            product.price <= debouncedPrice[1]
         )
         return [...acc, ...productsInPriceRange]
       }
       return acc
     }, [])
-  }, [storeList, filteredStoreIds, priceRange])
+  }, [storeList, filteredStoreIds, debouncedPrice])
 
   const sortedAndFilteredProducts = useMemo(() => {
     let sortedProducts = [...filteredProducts]
