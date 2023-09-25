@@ -23,11 +23,12 @@ import { Icons } from "@/components/icons"
 
 interface ProductListSortDropdownMenuProps {
   onSortChange: (option: SortOption) => void
+  disabled: boolean
 }
 
 const ProductListSortDropdownMenu: React.FC<
   ProductListSortDropdownMenuProps
-> = ({ onSortChange }) => {
+> = ({ onSortChange, disabled }) => {
   const [isPending, startTransition] = useTransition()
 
   const handleSortChange = (value: SortOption) => {
@@ -39,7 +40,11 @@ const ProductListSortDropdownMenu: React.FC<
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button aria-label="Sort products" size="sm" disabled={isPending}>
+        <Button
+          aria-label="Sort products"
+          size="sm"
+          disabled={isPending || disabled}
+        >
           Sort
           <Icons.chevronDown className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>
