@@ -1,3 +1,6 @@
+export type PriceRange = [number, number]
+export const DEFAULT_PRICE_RANGE: PriceRange = [0, 5000]
+
 export enum SortOption {
     PRICE_ASC = "price.asc",
     PRICE_DESC = "price.desc",
