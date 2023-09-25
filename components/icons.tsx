@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRightCircle,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   CreditCard,
@@ -48,6 +49,7 @@ export const Icons = {
   trash: Trash,
   UserCircle: UserCircle2,
   star: Star,
+  chevronDown: ChevronDown,
 
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
