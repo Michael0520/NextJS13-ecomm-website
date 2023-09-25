@@ -22,13 +22,14 @@ import {
 import { Icons } from "@/components/icons"
 
 interface ProductListSortDropdownMenuProps {
+  sortOption: SortOption | null
   onSortChange: (option: SortOption) => void
   disabled: boolean
 }
 
 const ProductListSortDropdownMenu: React.FC<
   ProductListSortDropdownMenuProps
-> = ({ onSortChange, disabled }) => {
+> = ({ onSortChange, disabled, sortOption }) => {
   const [isPending, startTransition] = useTransition()
 
   const handleSortChange = (value: SortOption) => {
@@ -55,6 +56,7 @@ const ProductListSortDropdownMenu: React.FC<
         {sortOptions.map((option) => (
           <DropdownMenuItem
             key={option.label}
+            className={cn(option.value === sortOption && "font-bold")}
             onClick={() => handleSortChange(option.value)}
           >
             {option.label}

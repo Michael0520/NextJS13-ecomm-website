@@ -116,6 +116,7 @@ const StoreListPage: React.FC = () => {
         />
         <ProductListSortDropdownMenu
           disabled={!isClient}
+          sortOption={sortOption}
           onSortChange={(option) => setSortOption(option)}
         />
       </div>
