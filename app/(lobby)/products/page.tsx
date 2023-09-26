@@ -28,7 +28,7 @@ const Star: React.FC<StarProps> = ({ full }) => (
   />
 )
 
-const StoreListPage: React.FC = () => {
+const ProductListPage: React.FC = () => {
   const dispatch = useDispatch()
   const storeList = useSelector((state) => state.storeList.storeList)
   const [isClient, setIsClient] = useState(false)
@@ -141,4 +141,4 @@ const StoreListPage: React.FC = () => {
   )
 }
 
-export default StoreListPage
+export default ProductListPage
