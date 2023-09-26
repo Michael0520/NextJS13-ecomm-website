@@ -7,12 +7,12 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+import LoginAvatar from "./auth/login-button"
 import { CartSheet } from "./checkout/card-sheet"
 import { Combobox } from "./combobox"
 import { MobileNav } from "./layouts/mobile-nav"
 
 export function SiteHeader() {
-  const avatarURL = "https://picsum.photos/id/237/800/800"
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -45,6 +45,8 @@ export function SiteHeader() {
             <ThemeToggle />
             {/* Shop Cart */}
             <CartSheet />
+            {/* Login Avatar */}
+            <LoginAvatar />
           </nav>
         </div>
       </div>
