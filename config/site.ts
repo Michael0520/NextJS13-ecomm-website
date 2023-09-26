@@ -8,6 +8,12 @@ export const siteConfig = {
       title: "Lobby",
       items: [
         {
+          title: "Stores",
+          href: "/stores",
+          description: "Browse our stores",
+          items: [],
+        },
+        {
           title: "Products",
           href: "/products",
           description: "Browse our products",
