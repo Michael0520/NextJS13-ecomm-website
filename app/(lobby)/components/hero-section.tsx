@@ -9,7 +9,7 @@ const HeroSection = () => {
     <motion.section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative mx-auto flex h-[50vh] w-full max-w-[64rem] flex-col items-center justify-center gap-4 text-center"
+      className="relative mx-auto flex h-[calc(100dvh-89px)] w-full max-w-[64rem] flex-col items-center justify-center gap-4 text-center"
     >
       <AnimatePresence>
         <motion.div
