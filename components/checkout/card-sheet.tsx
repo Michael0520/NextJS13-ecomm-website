@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { useMemo } from "react"
 import Link from "next/link"
 
 import { selectCartItems, useSelector } from "@/lib/redux"
@@ -110,12 +110,17 @@ const HasItemsInCart = ({
 
 export function CartSheet() {
   const itemList = useSelector(selectCartItems)
-  const itemCount = itemList.reduce((acc, item) => acc + item.quantity, 0)
+  const itemCount = useMemo(() => {
+    return itemList.reduce((acc, item) => acc + item.quantity, 0)
+  }, [itemList])
   const hasItem = itemCount > 0
-  const cartTotal = itemList.reduce(
-    (total, item) => total + Number(item.quantity) * Number(item.price),
-    0
-  )
+
+  const cartTotal = useMemo(() => {
+    return itemList.reduce(
+      (total, item) => total + Number(item.quantity) * Number(item.price),
+      0
+    )
+  }, [itemList])
 
   return (
     <Sheet>
@@ -143,14 +148,11 @@ export function CartSheet() {
           </div>
 
           {/* Desktop Button */}
-          <div className="hidden md:block">
+          <div className="hidden items-center md:flex">
             <Button
-              className={`flex items-center space-x-2 overflow-hidden rounded-full`}
+              className="flex items-center space-x-2 overflow-hidden rounded-full"
               variant="outline"
             >
-              <div className="relative -ml-2 flex h-8 w-8 items-center">
-                <Icons.UserCircle />
-              </div>
               <span className="text-sm">{`${itemCount} items`}</span>
               <span className="mx-1 text-sm">|</span>
               <Icons.ShoppingCart className="h-5 w-5" />
