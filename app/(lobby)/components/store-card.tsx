@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -13,30 +12,32 @@ const StoreCard: React.FC<Props> = ({ store }) => {
   const imgURL = store.imgURL ?? "/images/placeholder.png"
 
   return (
-    <div className="relative flex h-[300px] w-full flex-col overflow-hidden rounded-lg text-white shadow-md">
+    <div className="hover:group group relative flex h-[300px] w-full flex-col overflow-hidden rounded-lg text-white shadow-md">
       {/* Header */}
-      <div className="absolute top-1 z-10 flex w-full flex-col items-start justify-start p-3">
+      <div className="absolute top-1 z-20 flex w-full flex-col items-start justify-start p-3">
         <p className="text-tiny font-bold uppercase text-white/60">
           Your day your way
         </p>
-        <h4 className="text-xl font-medium text-white/90">{store.name}</h4>
+        <h4 className="z-20 text-xl font-medium text-white/90">{store.name}</h4>
       </div>
 
       {/* Image */}
-      <Image
-        src={imgURL}
-        alt={store.name}
-        className="z-0 h-full w-full rounded-lg object-cover opacity-50 transition-opacity duration-300"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        fill
-        priority
-      />
+      <div className="absolute inset-0 z-10 bg-zinc-950/50 transition-colors group-hover:bg-zinc-950/50"></div>
+      <div className="absolute inset-0 z-0 transition-transform group-hover:scale-110">
+        <Image
+          src={imgURL}
+          alt={store.name}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          fill
+          priority
+        />
+      </div>
 
       {/* Footer */}
       <div className="absolute bottom-0 z-10 flex h-auto w-full items-center overflow-hidden rounded-b-lg border-t border-gray-600 bg-black/40 p-3 backdrop-blur backdrop-saturate-150">
         <div className="flex grow items-center gap-2">
           {/* Icon Placeholder */}
-          <div className="relative h-11 w-10 rounded-lg bg-black">
+          <div className="relative h-11 w-10 shrink-0 rounded-lg bg-transparent">
             <Image
               src={imgURL}
               alt="Breathing App Icon"
@@ -48,9 +49,11 @@ const StoreCard: React.FC<Props> = ({ store }) => {
           </div>
           <div className="flex flex-col">
             <p className="text-tiny text-white/60">{store.location}</p>
-            <p className="text-tiny line-clamp-1 text-white/60">
-              {store.description}
-            </p>
+            <div className="max-h-[50px] overflow-y-auto">
+              <p className="text-tiny line-clamp-1 text-white/60">
+                {store.description}
+              </p>
+            </div>
           </div>
         </div>
         <Link href={`/store/${store.id}`}>
