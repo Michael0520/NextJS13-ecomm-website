@@ -3,8 +3,7 @@ import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -18,58 +17,45 @@ export default function AuthenticationPage({
 }) {
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1572536578780-e093289832fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1588&q=80"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="block dark:hidden"
-        />
-        <Image
-          src="https://images.unsplash.com/photo-1572536578780-e093289832fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1588&q=80"
-          width={1280}
-          height={843}
-          alt="Authentication"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="container relative hidden h-[100dvh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="container relative grid h-[100dvh] items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
-          href="/examples/authentication"
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8"
-          )}
+          href="/"
+          className="absolute left-8 top-8 flex gap-2 md:right-8 lg:hidden"
         >
-          Login
+          <Icons.popcorn />
+          Modern eat
         </Link>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-6 w-6"
+          <Image
+            src="https://images.unsplash.com/photo-1572536578780-e093289832fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80"
+            fill
+            priority
+            alt="image"
+            className="absolute inset-0 object-cover opacity-50"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+          <Link
+            href="/"
+            className="relative z-20 flex items-center gap-2 text-lg font-medium"
+          >
+            <Icons.popcorn />
+            Modern eat
+          </Link>
+          <div className="absolute bottom-6 left-8 z-20 line-clamp-1 text-base">
+            Photo by{" "}
+            <a
+              href="https://unsplash.com/ja/@pixelperfektion?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              className="hover:underline"
             >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
-            Acme Inc
-          </div>
-          <div className="relative z-20 mt-auto">
-            <blockquote className="space-y-2">
-              <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
-              </p>
-              <footer className="text-sm">Sofia Davis</footer>
-            </blockquote>
+              pixelperfektion
+            </a>
+            {" on "}
+            <a
+              href="https://unsplash.com/photos/OS2WODdxy1A?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              className="hover:underline"
+            >
+              Unsplash
+            </a>
           </div>
         </div>
         <div className="lg:p-8">
