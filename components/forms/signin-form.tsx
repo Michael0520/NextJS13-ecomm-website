@@ -14,9 +14,23 @@ interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const SignInForm = ({ className, ...props }: SignInFormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  const handleClick = () => {
-    signIn("google")
+  const ButtonContent = ({ platform }: { platform: string }) => (
+    <>
+      {isLoading ? (
+        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+      ) : platform === "google" ? (
+        <Icons.google className="mr-2 h-4 w-4" />
+      ) : (
+        <Icons.gitHub className="mr-2 h-4 w-4" />
+      )}
+      Sign In with {platform.charAt(0).toUpperCase() + platform.slice(1)}
+    </>
+  )
+
+  const handleClick = (platform: string) => {
+    signIn(platform)
   }
+
   const onSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
     setIsLoading(true)
@@ -38,17 +52,11 @@ const SignInForm = ({ className, ...props }: SignInFormProps) => {
               id="email"
               placeholder="name@example.com"
               type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
               disabled={isLoading}
             />
           </div>
           <Button disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign In with Email
+            <ButtonContent platform="email" />
           </Button>
         </div>
       </form>
@@ -62,20 +70,17 @@ const SignInForm = ({ className, ...props }: SignInFormProps) => {
           </span>
         </div>
       </div>
-      <Button
-        variant="outline"
-        type="button"
-        disabled={isLoading}
-        onClick={handleClick}
-      >
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "}
-        {/* Github */}
-        Sign In with Google
-      </Button>
+      {["google", "github"].map((platform) => (
+        <Button
+          key={platform}
+          variant="outline"
+          type="button"
+          disabled={isLoading}
+          onClick={() => handleClick(platform)}
+        >
+          <ButtonContent platform={platform} />
+        </Button>
+      ))}
     </div>
   )
 }
