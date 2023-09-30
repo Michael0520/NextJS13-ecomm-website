@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { SessionProvider } from "next-auth/react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { type ThemeProviderProps } from "next-themes/dist/types"
 /* Core */
@@ -13,9 +14,11 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 export function Providers({ children, ...props }: ThemeProviderProps) {
   return (
     <NextThemesProvider {...props}>
-      <Provider store={reduxStore} {...props}>
-        <TooltipProvider>{children}</TooltipProvider>
-      </Provider>
+      <SessionProvider>
+        <Provider store={reduxStore} {...props}>
+          <TooltipProvider>{children}</TooltipProvider>
+        </Provider>
+      </SessionProvider>
     </NextThemesProvider>
   )
 }
