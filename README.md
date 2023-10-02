@@ -18,3 +18,5 @@ npm run dev
 - Dark mode with `next-themes`
 - Tailwind CSS class sorting, merging and linting.
 - State Manager with Redux & Redux/ToolKit
+- Auth with Next-auth (WIP)
+- DataBase with supabase (WIP)
